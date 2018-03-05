@@ -8,7 +8,7 @@ class Database
     {    
         if(!isset(self::$connection))
         {
-            $config = parse_ini_file('./config/database.ini');
+            $config = parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/config/database.ini');
             self::$connection = new mysqli($config['servername'],$config['username'],$config['password'],$config['dbname']);
 
             if (mysqli_connect_errno())

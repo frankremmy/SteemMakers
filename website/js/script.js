@@ -54,13 +54,28 @@ function generatePreviewHtml(post)
     return previewHtml;
 }
 
-function storyPreview ( article, author, permlink )
+function storyPreview ( article, author, permlink, callback)
 {
-    var test = steem.api.getContent(author, permlink, function(err, post)
-    {
-      $("#spinner" + article).hide();
-      $("#article" + article).append(generatePreviewHtml(post));
-    });
+	steem.api.getContent(author, permlink, function(err, post)
+	{
+		if(!err && post.body !== "")
+		{
+			if(("#spinner" + article).length)
+			{
+				$("#spinner" + article).hide();
+			}
+			
+			$("#article" + article).append(generatePreviewHtml(post));
 
-    return test;
+			typeof callback === 'function' && callback(true);
+		}
+		else
+		{
+			if(("#spinner" + article).length)
+			{
+				$("#spinner" + article).hide();
+			}
+			typeof callback === 'function' && callback(false);
+		}
+	});
 }

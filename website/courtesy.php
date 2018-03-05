@@ -31,6 +31,12 @@
 						<h5>Editors</h5>
 						<a href="https://www.steemit.com/@techslut">@techslut</a><br/>
 						<a href="https://www.steemit.com/@suesa">@suesa</a><br/>
+
+						<h5>Content</h5>
+						<a href="https://www.steemit.com/@pbock">@pbock</a><br/>
+						
+						<h5>Graphics</h5>
+						<a href="https://www.steemit.com/@podanrj">@podanrj</a><br/>
 					</center>
 				</div>
 			</div>

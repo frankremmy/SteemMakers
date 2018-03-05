@@ -14,6 +14,10 @@
 		<script type="text/javascript" src="js/script.js?t=1234"></script> 
 		<script type="text/javascript" src="js/image.js"></script>
 		<script type="text/javascript" src="js/body.js"></script>
+		<script src="https://steemit.github.io/sc2-angular/sc2.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+		<script type="text/javascript" src="js/sc2.min.js"></script>
+		<script type="text/javascript" src="js/sc2.js"></script>
 		<link href="css/bootstrap.min.css" rel="stylesheet"> 
 		<link href="css/main.css" rel="stylesheet"> 
 	</head>
@@ -25,7 +29,7 @@
 				require_once('./src/paginator.php'); 
 				$database = new Database();
 				
-				$query = "SELECT name, p.permlink FROM (SELECT * FROM approved_posts ORDER BY voted_on DESC) p INNER JOIN users u ON p.author_id = u.id ORDER BY p.voted_on DESC";
+				$query = "SELECT name, p.permlink FROM (SELECT * FROM approved_posts) p INNER JOIN users u ON p.author_id = u.id ORDER BY p.reviewed_on DESC";
 
 				$limit = ( isset( $_GET['limit'] ) ) ? $_GET['limit'] : 5;
 				$page = ( isset( $_GET['page'] ) ) ? $_GET['page'] : 1;

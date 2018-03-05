@@ -1,11 +1,13 @@
 <?php
-function addActiveClass($page)
-{
-	if($_SERVER['PHP_SELF'] == $page)
+	require_once('./src/utils.php');
+
+	function addActiveClass($page)
 	{
-		echo " active"; 
+		if($_SERVER['PHP_SELF'] == $page)
+		{
+			echo " active"; 
+		}
 	}
-}
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
@@ -29,12 +31,38 @@ function addActiveClass($page)
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item<?php addActiveClass('/about.php'); ?>" href="about.php">About</a>
 						<a class="dropdown-item<?php addActiveClass('/faq.php'); ?>" href="faq.php">FAQ</a>
+						<a class="dropdown-item<?php addActiveClass('/steemmakerstrail.php'); ?>" href="steemmakerstrail.php">Follow our trail</a>
 					</div>
 				</li>
 				<li class="nav-item<?php addActiveClass('/contact.php'); ?>">
 					<a class="nav-link" href="contact.php">Contact</a>
 				</li>
+				<?php
+					if(IsLoggedOnUser())
+					{
+						echo 
+						'<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="accountPreview" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+						if(IsAuthorizedReviewer())
+						{
+							echo '		<a class="dropdown-item" href="addpost.php">Add post</a>';
+						}
+						echo
+						'		<a class="dropdown-item" href="#" id=\'logout\' onclick="Logout();return false;">Logout</a>
+							</div>
+						</li>';
+					}
+					else
+					{
+						echo 
+						'<li class="nav-item dropdown">
+							<a class="nav-link" href="" id=\'login\'>Login</a><br>
+						</li>';
+					}
+				?>
 			</ul>
 		</div>
 	</div>
 </nav>
+<script>SetProfileInfo();</script>

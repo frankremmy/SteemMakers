@@ -25,7 +25,7 @@
 			<h4 class="my-4">What kind of posts are approved?</h4>
 			
 			<p>
-				SteemMakers focuses on both the <a href="https://en.wikipedia.org/wiki/Maker_culture" class="text-white" style="text-decoration: underline;">maker</a> and <a href="https://en.wikipedia.org/wiki/Do_it_yourself" class="text-white" style="text-decoration: underline;">do-it-yourself</a> movement.
+				SteemMakers focuses on both the <a href="https://en.wikipedia.org/wiki/Maker_culture" style="text-decoration: underline;">maker</a> and <a href="https://en.wikipedia.org/wiki/Do_it_yourself" style="text-decoration: underline;">do-it-yourself</a> movement.
 				<br>
 				With DIY we mean all activity to create or modify anything when it is accomplished by an individual rather than by a paid professional.
 				<br>
@@ -35,7 +35,7 @@
 			<h4 class="my-4">What does SteemMakers do?</h4>
 			
 			<p>
-				We aim to be a guiding and helping community, supporting makers and DIYers on the steem blockchain in various ways. Have a look at our <a href="about.php" class="text-white" style="text-decoration: underline;">about page</a> for more details.
+				We aim to be a guiding and helping community, supporting makers and DIYers on the steem blockchain in various ways. Have a look at our <a href="about.php" style="text-decoration: underline;">about page</a> for more details.
 			</p>
             
 			<h4 class="my-4">My posts contain pictures of awesome craftwork I’ve seen on the Internet, will I be featured by SteemMakers?</h4>
@@ -95,7 +95,7 @@
 			
 			<p>
 				SteemMakers works as a curation guild. This means we search for valuable posts ourselves. 
-				You can request a review by posting a link in the request-review channel on our <a href="https://discord.gg/YJcAu8m" class="text-white" style="text-decoration: underline;">Discord server</a>.
+				You can request a review by posting a link in the request-review channel on our <a href="https://discord.gg/YJcAu8m" style="text-decoration: underline;">Discord server</a>.
 			
 			</p>
 			
@@ -133,7 +133,7 @@
 			<h4 class="my-4">I have another question, where can I ask it?</h4>
 			
 			<p>	
-				The best way to reach us is to join our <a href="https://discord.gg/YJcAu8m" class="text-white" style="text-decoration: underline;">Discord server</a>.
+				The best way to reach us is to join our <a href="https://discord.gg/YJcAu8m" style="text-decoration: underline;">Discord server</a>.
 			</p>
 		</div>
 		<?php include("footer.php"); ?>
