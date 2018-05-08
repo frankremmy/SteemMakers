@@ -31,3 +31,8 @@ export function GetAnyYouTubeURLRegExp()
 {
 	return new RegExp(urlSet('(?:(?:.*.)?youtube.com|youtu.be)'), 'gi');
 }
+
+export function GetYouTubeIDRegExp()
+{
+	return new RegExp(/(?:(?:youtube.com\/watch\?v=)|(?:youtu.be\/)|(?:youtube.com\/embed\/))([A-Za-z0-9\_\-]+)/i);
+}

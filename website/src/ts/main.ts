@@ -1,15 +1,15 @@
-import Vue from "vue";
-import BlogEntryComponent from "./components/BlogEntry.vue";
+import Vue from 'vue'
+import router from './router'
+import App from './App.vue'
+import BootstrapVue from 'bootstrap-vue'
+
+import './assets/bootstrap.min.css'
+import './assets/main.css'
+
+Vue.use(BootstrapVue);
 
 let v = new Vue({
-    el: "#app",
-    template: `
-    	<div>
-        	<blog-entry-component />
-        </div>
-    `,
-    data: { name: "World" },
-    components: {
-        BlogEntryComponent
-    }
+	el: 'app',
+	router,
+	components:{App}
 });

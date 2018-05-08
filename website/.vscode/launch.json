@@ -7,14 +7,17 @@
 		{
             "name": "vuejs: chrome",
             "type": "chrome",
-            "request": "launch",
-			"url": "http://localhost/post.php?author=makerhacks&permlink=python-arcade-full-game-demonstration",
+			"request": "launch",
+			"url": "http://localhost",
+			//"url": "http://localhost/post.php?author=flash4yard&permlink=blinkit-or-logitech-rgb-keyboard-preparation",
+			//"url": "http://localhost/post.php?author=zadriel&permlink=or-or-wooden-watch-3dprinted-or-or",
+			//"url": "http://localhost/post.php?author=makerhacks&permlink=python-arcade-full-game-demonstration",
 			//"url": "http://localhost/post.php?author=jefpatat&permlink=view-your-favourite-content-on-the-steemmakers-website",
 			//"url": "http://localhost/post.php?author=wieske&permlink=5jl4z5-test",
 			//"url": "http://localhost/post.php?author=therascal&permlink=529b6dc0-2005-11e8-8d9c-0242ac110002",
 			//"url": "http://localhost/post.php?author=rasor&permlink=73clwotn",
             "webRoot": "${workspaceFolder}",
-            "breakOnLoad": true
+			"breakOnLoad": false,
         },
         {
             "name": "Listen for XDebug",

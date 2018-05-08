@@ -102,7 +102,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 .post-title
 {
 	padding:20px 10px;
