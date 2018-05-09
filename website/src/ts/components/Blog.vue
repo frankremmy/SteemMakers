@@ -2,7 +2,18 @@
 	<div class="container article">
 		<template> 
 			<div class="row" v-for="(article, index) in articles" :key="index">
-				<label> {{ article.name }} </label>
+				<div class="imageframe col-md-3">
+					<div class="blog-image">
+						<img :src="article.previewImage" style="border-radius: 5px;">
+					</div>
+				</div>
+				<div class="col-md-9">
+					<h5 class="font-weight-bold" style="margin-top:5px;"><a href="">{{article.title}}</a></h5>
+					<div class="multiline-ellipsis">
+						<p>{{article.previewBody}}</p>
+					</div>
+					<span class="metadata"><i>by <a :href="article.previewBody">{{article.author}}</a> on {{article.created | formatDate}}</i></span>
+				</div>
 			</div>
 		</template>
 	</div>
@@ -10,16 +21,20 @@
 
 <script lang="ts">
 	import Vue from "vue";
-	import {GetBlogArticles} from "../utils/utils";
+	import {getBlogArticles, formatDate} from "../utils/utils";
 	
 	export default Vue.extend({
 		data: function ()
 		{
 			return {
-				articles: [
-					{name: 'article 1'},
-					{name: 'article 2'}
-				]
+				articles: <BlogEntry[]> []
+			}
+		},
+		filters: 
+		{
+			formatDate: function (date: Date)
+			{
+				return formatDate(date);
 			}
 		},
 		created: function ()
@@ -30,34 +45,54 @@
 		{
 			LoadContent()
 			{
-				GetBlogArticles("steemmakers", 20, (error, blogEntry) =>
+				getBlogArticles("steemmakers", 20, (error, blogEntries) =>
 				{
-					// this.ArticleURL = blogEntry.url;
-					// this.Author = blogEntry.author;
-					// this.BodyHTML = blogEntry.body;
-					// this.Title = blogEntry.title;
-					
-					// var options = {year: "numeric", month: "long", day: "numeric", hour: '2-digit', minute:'2-digit', hour12: false};
-					// this.CreationDateTime = formatDate(blogEntry.created);
-
+					this.articles = blogEntries;
 				});
 			}
 		}
 	});
-
-	function formatDate(date: Date) :string
-	{
-		var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-
-		var day = date.getDate();
-		var monthIndex = date.getMonth();
-		var year = date.getFullYear();
-
-		return day + ' ' + monthNames[monthIndex] + ' ' + year + ', ' + date.getHours() + ':' + date.getMinutes();
-	}
 </script>
 
 
 <style scoped>
+.imageframe
+{
+	display: flex;
+	align-items: center;
+	padding: 0px;
+}
 
+.metadata
+{
+	margin-top: 10px;
+	display: block;
+}
+
+.blog-image
+{
+	height:130px;
+	text-align: center;
+	line-height: 130px;
+}
+
+.blog-image img
+{
+	max-width:100%; max-height:100%; display: inline-block; margin: auto;
+}
+
+.multiline-ellipsis
+{
+	display: block;
+	display: -webkit-box;
+	max-width: 100%;
+	height: 72px;
+	line-height: 1.2;
+	margin: 0 auto;
+	font-size: 15px;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 </style>

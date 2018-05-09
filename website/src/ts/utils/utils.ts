@@ -28,7 +28,7 @@ export function createPostHtml (author: string, permlink: string, callback: (err
 	});
 }
 
-export function GetBlogArticles (author: string, limit: number, callback: (error :string|null, result :Array<BlogEntry>) => void) : void
+export function getBlogArticles (author: string, limit: number, callback: (error :string|null, result :Array<BlogEntry>) => void) : void
 {
 	steem.api.getDiscussionsByBlog({tag: 'steemmakers', limit: 20}, function(err, posts) 
 	{
@@ -42,7 +42,10 @@ export function GetBlogArticles (author: string, limit: number, callback: (error
 				markdownContentParser.Parse(posts[i].body);
 	
 				newEntry.author = posts[i].author;
+				newEntry.authorBlog = "steemit.com/@" + posts[i].author;
 				newEntry.body = markdownContentParser.body;
+				newEntry.previewBody = markdownContentParser.previewBody;
+				newEntry.previewImage = markdownContentParser.previewImage;
 				newEntry.created = new Date(posts[i].created + '.000Z');
 				newEntry.title = posts[i].title;
 				newEntry.url = posts[i].url;
@@ -55,4 +58,15 @@ export function GetBlogArticles (author: string, limit: number, callback: (error
 			callback(err, result);
 		}
 	});
+}
+
+export function formatDate(date: Date) :string
+{
+	var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+	var day = date.getDate();
+	var monthIndex = date.getMonth();
+	var year = date.getFullYear();
+
+	return day + ' ' + monthNames[monthIndex] + ' ' + year + ', ' + date.getHours() + ':' + date.getMinutes();
 }
