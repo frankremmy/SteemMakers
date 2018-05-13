@@ -44,6 +44,7 @@ export function getBlogArticles (author: string, limit: number, callback: (error
 				newEntry.author = posts[i].author;
 				newEntry.authorBlog = "steemit.com/@" + posts[i].author;
 				newEntry.body = markdownContentParser.body;
+				newEntry.permlink = posts[i].permlink;
 				newEntry.previewBody = markdownContentParser.previewBody;
 				newEntry.previewImage = markdownContentParser.previewImage;
 				newEntry.created = new Date(posts[i].created + '.000Z');

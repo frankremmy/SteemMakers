@@ -1,5 +1,5 @@
 <template>
-	<b-navbar toggleable="md" type="dark" variant="primary">
+	<b-navbar toggleable="md" type="dark" variant="primary" sticky=true>
 		<div class="container"> 
 
 		<b-navbar-brand href="#" style="font-family: 'Rajdhani', sans-serif; font-size: 40px; line-height:40px; font-weight: 700; font-style: normal;">

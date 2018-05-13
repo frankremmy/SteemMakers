@@ -1,14 +1,18 @@
 <template>
-	<div>
-		<div class="post-title">
-			<h1>{{Title}}</h1>
+	<div class="container article">
+		<div class="row">
+			<div style="width: 100%; position: relative;">
+				<div class="post-title">
+					<h1>{{Title}}</h1>
+				</div>
+				<div class="post-meta">
+					<span><i>by <a :href="AuthorBlogLink">{{Author}}</a> on {{CreationDateTime}}</i></span>
+					<a :href="SteemitArticleLink" target="_blank" style="float: right;"><img class="media-button" src="img/steemit.png"></a>
+					<a :href="BusyArticleLink" target="_blank" style="float: right;"><img class="media-button" src="img/busy.png"></a>
+				</div>
+				<div v-highlightjs v-html="BodyHTML"></div>
+			</div>
 		</div>
-		<div class="post-meta">
-			<span><i>by <a :href="AuthorBlogLink">{{Author}}</a> on {{CreationDateTime}}</i></span>
-			<a :href="SteemitArticleLink" target="_blank" style="float: right;"><img class="media-button" src="img/steemit.png"></a>
-			<a :href="BusyArticleLink" target="_blank" style="float: right;"><img class="media-button" src="img/busy.png"></a>
-		</div>
-		<div v-highlightjs v-html="BodyHTML"></div>
 	</div>
 </template>
 
@@ -26,6 +30,10 @@
 	});
 
 	export default Vue.extend({
+		props: [
+			'author',
+			'permlink',
+		],
 		router,
 		data: function ()
 		{
@@ -75,7 +83,7 @@
 		{
 			LoadContent()
 			{
-				createPostHtml(this.$route.query.author, this.$route.query.permlink, (error, blogEntry) =>
+				createPostHtml(this.author, this.permlink, (error, blogEntry) =>
 				{
 					this.ArticleURL = blogEntry.url;
 					this.Author = blogEntry.author;

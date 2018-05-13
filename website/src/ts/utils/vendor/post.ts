@@ -5,6 +5,7 @@ declare namespace steem
 		author: string;
 		body: string;
 		created: string;
+		permlink: string;
 		title: string;
 		url: string;
 	}

@@ -4,6 +4,7 @@ interface BlogEntry
 	authorBlog: string;
 	body: string;
 	created: Date;
+	permlink: string;
 	previewBody: string;
 	previewImage: string | null;
 	title: string;
