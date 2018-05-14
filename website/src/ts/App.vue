@@ -1,19 +1,23 @@
 <template>
-	<div id="app">
+	<div class="Site bg-secondary">
 		<navbar></navbar>
-		<section class="container-fluid flex-grow">
+		<div class="Site-content">
 			<router-view></router-view>
-		</section>
+		</div>
+
+		<footercomp></footercomp>
 	</div>
 </template>
 
 <script>
 	import Navbar from './Components/Navbar'
+	import Footercomp from './Components/Footercomp'
 	export default {
 		name: 'app',
-		components: {Navbar},
+		components: {Navbar, Footercomp},
 	}
 </script>
 
 <style scoped>
+
 </style>

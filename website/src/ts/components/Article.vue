@@ -100,20 +100,52 @@
 </script>
 
 <style scoped>
-.post-title
-{
-	padding:20px 10px;
-}
+	div.videoWrapper
+	{
+		width: 100%;
+		height: 0;
+		padding-bottom: 56.25%; /* 16/9 = 0.5625 */
+		padding-top: 25px;
+		position: relative;
+	}
 
-.post-meta
-{
-	border-top: 1px solid #bdbdbd;
-	border-bottom: 1px solid #bdbdbd;
-	display: block;
-	font-size: 13px;
-	font-weight: 400;
-	line-height: 21px;
-	padding: 10px;
-	margin-bottom: 10px;
-}
+	div.videoWrapper iframe
+	{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.media-button
+	{
+		opacity: 1;
+		width: 20px;
+		height: 20px;
+		border-radius: 2px;
+		margin-left: 5px;
+		float: right;
+	}
+	
+	.media-button:hover
+	{
+		opacity: 0.75;
+	}
+	.post-title
+	{
+		padding:20px 10px;
+	}
+
+	.post-meta
+	{
+		border-top: 1px solid #bdbdbd;
+		border-bottom: 1px solid #bdbdbd;
+		display: block;
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 21px;
+		padding: 10px;
+		margin-bottom: 10px;
+	}
 </style>

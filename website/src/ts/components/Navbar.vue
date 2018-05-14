@@ -30,4 +30,14 @@
 </script>
 
 <style scoped>
+	.navbar
+	{
+		padding:0rem 0.75rem;
+	}
+
+	.navbar-brand
+	{
+		padding: 0;
+		margin:0;
+	}
 </style>
