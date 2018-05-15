@@ -1,7 +1,8 @@
 <template>
-	<div class="Site bg-secondary">
+	<div class="application bg-secondary">
 		<navbar></navbar>
-		<div class="Site-content">
+		
+		<div class="application-content">
 			<router-view></router-view>
 		</div>
 
@@ -19,5 +20,15 @@
 </script>
 
 <style scoped>
+	.application
+	{
+		display: flex;
+		min-height: 100vh;
+		flex-direction: column;
+	}
 
+	.application-content
+	{
+		flex: 1;
+	}
 </style>

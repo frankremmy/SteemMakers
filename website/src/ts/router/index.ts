@@ -7,6 +7,7 @@ import Contact from '../components/Contact.vue'
 import Courtesy from '../components/Courtesy.vue'
 import Delegation from '../components/Delegation.vue'
 import FAQ from '../components/FAQ.vue'
+import Home from '../components/Home.vue'
 import Notices from '../components/Notices.vue'
 import Trail from '../components/Trail.vue'
 
@@ -17,6 +18,7 @@ export default new Router({
 		{
 			path: '/',
 			name: 'Home',
+			component: Home
 		},
 		{
 			path: '/article/:author/:permlink',

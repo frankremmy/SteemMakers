@@ -2,6 +2,7 @@ import {MarkdownContentParser} from './markdowncontentparser';
 
 steem.api.setOptions({ url: 'https://api.steemit.com' });
 
+
 export function createPostHtml (author: string, permlink: string, callback: (error :string|null, result :BlogEntry) => void) : void
 {
 	steem.api.getContent(author, permlink, function(err, post)
@@ -25,6 +26,39 @@ export function createPostHtml (author: string, permlink: string, callback: (err
 		{
 			callback(err, result);
 		}
+	});
+}
+
+export function createArticleAsync (author: string, permlink: string) : Promise<BlogEntry>
+{
+	return new Promise((resolve,reject) =>
+	{
+		steem.api.getContent(author, permlink, function(err, post)
+		{
+			let result = {} as BlogEntry;
+
+			if(!err && post.body !== "")
+			{
+				let markdownContentParser = new MarkdownContentParser();
+				markdownContentParser.Parse(post.body);
+
+				result.author = post.author;
+				result.authorBlog = "steemit.com/@" + post.author;
+				result.body = markdownContentParser.body;
+				result.permlink = post.permlink;
+				result.previewBody = markdownContentParser.previewBody;
+				result.previewImage = markdownContentParser.previewImage;
+				result.created = new Date(post.created + '.000Z');
+				result.title = post.title;
+				result.url = post.url;
+
+				resolve(result);
+			}
+			else
+			{
+				reject(err);
+			}
+		});
 	});
 }
 
