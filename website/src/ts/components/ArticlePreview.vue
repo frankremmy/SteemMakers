@@ -93,6 +93,7 @@
 	height:130px;
 	text-align: center;
 	line-height: 130px;
+	margin: auto;
 }
 
 .blog-image img
