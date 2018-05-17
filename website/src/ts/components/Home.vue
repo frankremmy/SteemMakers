@@ -3,6 +3,7 @@
 		<div class="row" v-for="(article, index) in articles" :key="index">
 			<ArticlePreview v-bind:blogEntry="article"></ArticlePreview>
 		</div>
+		<b-pagination-nav :use-router="true" :link-gen="generateLink" align="center" :number-of-pages="nofPages" v-model="pageIndex" />
 	</div>
 </template>
 
@@ -13,10 +14,20 @@
 	
 	export default Vue.extend({
 		components: {ArticlePreview},
+		props:
+		{
+			page:
+			{
+				type: String,
+				required: false,
+				default: '1',
+			}
+		},
 		data: function ()
 		{
 			return {
-				articles: <BlogEntry[]> []
+				articles: <BlogEntry[]> [],
+				nofPages: 1
 			}
 		},
 		filters: 
@@ -26,19 +37,35 @@
 				return formatDate(date);
 			}
 		},
-		created: function ()
+		computed:
 		{
-			this.articles = new Array(10);
-			this.LoadContent();
+			pageIndex() :number
+			{
+				return parseInt(this.page, 10);
+			}
+		},
+		watch:
+		{
+			pageIndex()
+			{
+				this.loadContent();
+			},
+		},
+		mounted()
+		{
+			this.loadContent();
 		},
 		methods:
 		{
-			LoadContent()
+			loadContent()
 			{
-				fetch("http://localhost/api/v1/articles.php?page=1")
+				fetch("./api/v1/articles.php?page=" + this.pageIndex)
 				.then(response => response.json())
 				.then((data) =>
 				{
+					this.nofPages = Math.ceil(data.nofItems/10);
+					this.articles.splice(0);
+					this.articles.splice(data.data.length);
 					let index :number;
 					for(index = 0; index < data.data.length; index++)
 					{
@@ -49,7 +76,11 @@
 						}.bind(this, index));
 					}
 				})
-			}
+			},
+			generateLink(page :number)
+			{
+				return { name:'Home', params: { page: page.toString() } };
+			},
 		}
 	});
 </script>

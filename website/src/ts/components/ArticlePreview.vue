@@ -21,7 +21,7 @@
 	import Vue from "vue";
 	import VueRouter from 'vue-router';
 
-	import {createPostHtml, formatDate} from "../utils/utils";
+	import {formatDate} from "../utils/utils";
 
 	export default Vue.extend({
 		props: [

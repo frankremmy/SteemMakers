@@ -16,9 +16,10 @@ Vue.use(Router)
 export default new Router({
 	routes: [
 		{
-			path: '/',
+			path: '/:page?',
 			name: 'Home',
-			component: Home
+			component: Home,
+			props: true,
 		},
 		{
 			path: '/article/:author/:permlink',
