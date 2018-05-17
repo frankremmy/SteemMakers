@@ -69,10 +69,10 @@
 					let index :number;
 					for(index = 0; index < data.data.length; index++)
 					{
-						console.log(data.data[index]);
 						createArticleAsync(data.data[index].name, data.data[index].permlink).then(function(this: any, index: number, article: BlogEntry)
 						{
-							Vue.set(this.articles, index, article);
+							console.log('async');
+								Vue.set(this.articles, index, article);
 						}.bind(this, index));
 					}
 				})

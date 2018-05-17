@@ -1,18 +1,23 @@
 <template>
 	<div class="container-fluid">
-		<div class="row">
-		<div class="imageframe col-md-3">
-			<div class="blog-image">
-				<img :src="blogEntry.previewImage" style="border-radius: 5px;">
-			</div>
-		</div>
-		<div class="col-md-9">
-			<h5 class="font-weight-bold" style="margin-top:5px;"><router-link :to="{ name: 'Article', params: {author: blogEntry.author, permlink: blogEntry.permlink } }">{{blogEntry.title}}</router-link></h5>
-			<div class="multiline-ellipsis">
-				<p>{{blogEntry.previewBody}}</p>
-			</div>
-			<span class="metadata"><i>by <a :href="blogEntry.previewBody">{{blogEntry.author}}</a> on {{blogEntry.created | formatDate}}</i></span>
-		</div>
+		<div class="row" v-if="blogEntry">
+			<!-- <template v-if="loading">
+				<p>Loading</p>
+			</template>
+			<template v-else> -->
+				<div class="imageframe col-md-3">
+					<div class="blog-image">
+						<img :src="blogEntry.previewImage" style="border-radius: 5px;">
+					</div>
+				</div>
+				<div class="col-md-9">
+					<h5 class="font-weight-bold" style="margin-top:5px;"><router-link :to="{ name: 'Article', params: {author: blogEntry.author, permlink: blogEntry.permlink } }">{{blogEntry.title}}</router-link></h5>
+					<div class="multiline-ellipsis">
+						<p>{{blogEntry.previewBody}}</p>
+					</div>
+					<span class="metadata"><i>by <a :href="AuthorBlogLink">{{blogEntry.author}}</a> on {{blogEntry.created | formatDate}}</i></span>
+				</div>
+			<!-- </template> -->
 		</div>
 	</div>
 </template>
@@ -30,26 +35,14 @@
 		data: function ()
 		{
 			return {
-				ArticleURL: '',
-				Author: '',
-				CreationDateTime: '',
-				BodyHTML: '<p>Loading...<p>',
-				Title: '',
+				loading: true
 			}
 		},
 		computed:
 		{
 			AuthorBlogLink() :string
 			{
-				return 'https://www.steemit.com/@' + this.Author;
-			},
-			SteemitArticleLink() :string
-			{
-				return 'https://steemit.com' + this.ArticleURL;
-			},
-			BusyArticleLink() :string
-			{
-				return 'https://busy.org' + this.ArticleURL;
+				return 'https://www.steemit.com/@' + this.blogEntry.author;
 			}
 		},
 		filters: 
@@ -59,6 +52,17 @@
 				return formatDate(date);
 			}
 		},
+		watch:
+		{
+			blogEntry(newValue)
+			{
+				console.log('watch');
+				if(newValue)
+					this.loading = false;
+				else
+					this.loading = true;
+			}
+		}
 	});
 </script>
 
