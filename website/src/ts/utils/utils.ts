@@ -1,4 +1,4 @@
-import {MarkdownContentParser} from './markdowncontentparser';
+import {BlogEntry} from '../blogentry'
 
 steem.api.setOptions({ url: 'https://api.steemit.com' });
 
@@ -11,14 +11,14 @@ export function createPostHtml (author: string, permlink: string, callback: (err
 
 		if(!err && post.body !== "")
 		{
-			let markdownContentParser = new MarkdownContentParser();
-			markdownContentParser.Parse(post.body);
+			// let markdownContentParser = new MarkdownContentParser();
+			// markdownContentParser.Parse(post.body);
 
-			result.author = post.author;
-			result.body = markdownContentParser.body;
-			result.created = new Date(post.created + '.000Z');
-			result.title = post.title;
-			result.url = post.url;
+			// result.author = post.author;
+			// result.body = markdownContentParser.body;
+			// result.created = new Date(post.created + '.000Z');
+			// result.title = post.title;
+			// result.url = post.url;
 
 			callback(null, result);
 		}
@@ -29,30 +29,15 @@ export function createPostHtml (author: string, permlink: string, callback: (err
 	});
 }
 
-export function createArticleAsync (author: string, permlink: string) : Promise<BlogEntry>
+export function createArticleAsync (author: string, permlink: string) : Promise<steem.Post>
 {
 	return new Promise((resolve,reject) =>
 	{
 		steem.api.getContent(author, permlink, function(err, post)
 		{
-			let result = {} as BlogEntry;
-
 			if(!err && post.body !== "")
 			{
-				let markdownContentParser = new MarkdownContentParser();
-				markdownContentParser.Parse(post.body);
-
-				result.author = post.author;
-				result.authorBlog = "steemit.com/@" + post.author;
-				result.body = markdownContentParser.body;
-				result.permlink = post.permlink;
-				result.previewBody = markdownContentParser.previewBody;
-				result.previewImage = markdownContentParser.previewImage;
-				result.created = new Date(post.created + '.000Z');
-				result.title = post.title;
-				result.url = post.url;
-
-				resolve(result);
+				resolve(post);
 			}
 			else
 			{
@@ -71,19 +56,7 @@ export function getBlogArticles (author: string, limit: number, callback: (error
 		{
 			for (var i = 0; i < posts.length; i++) 
 			{
-				let newEntry = {} as BlogEntry;
-				let markdownContentParser = new MarkdownContentParser();
-				markdownContentParser.Parse(posts[i].body);
-	
-				newEntry.author = posts[i].author;
-				newEntry.authorBlog = "steemit.com/@" + posts[i].author;
-				newEntry.body = markdownContentParser.body;
-				newEntry.permlink = posts[i].permlink;
-				newEntry.previewBody = markdownContentParser.previewBody;
-				newEntry.previewImage = markdownContentParser.previewImage;
-				newEntry.created = new Date(posts[i].created + '.000Z');
-				newEntry.title = posts[i].title;
-				newEntry.url = posts[i].url;
+				let newEntry = new BlogEntry(posts[i]);
 				result.push(newEntry);
 			}
 			callback(null, result);

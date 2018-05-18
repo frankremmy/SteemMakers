@@ -16,7 +16,7 @@ Vue.use(Router)
 export default new Router({
 	routes: [
 		{
-			path: '/:page?',
+			path: '/home/:page?',
 			name: 'Home',
 			component: Home,
 			props: true,

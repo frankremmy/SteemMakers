@@ -10,6 +10,7 @@
 	import Vue from "vue";
 	import ArticlePreview from './ArticlePreview.vue'
 	import {getBlogArticles, formatDate} from "../utils/utils";
+	import {BlogEntry} from '../blogentry'
 	
 	export default Vue.extend({
 		components: {ArticlePreview},

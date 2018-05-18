@@ -11,6 +11,7 @@
 	import Vue from "vue";
 	import ArticlePreview from './ArticlePreview.vue'
 	import {getBlogArticles, formatDate, createArticleAsync} from "../utils/utils";
+	import {BlogEntry} from '../blogentry'
 	
 	export default Vue.extend({
 		components: {ArticlePreview},
@@ -26,7 +27,7 @@
 		data: function ()
 		{
 			return {
-				articles: <BlogEntry[]> [],
+				articles: <(null|BlogEntry)[]> [],
 				nofPages: 1
 			}
 		},
@@ -69,10 +70,13 @@
 					let index :number;
 					for(index = 0; index < data.data.length; index++)
 					{
-						createArticleAsync(data.data[index].name, data.data[index].permlink).then(function(this: any, index: number, article: BlogEntry)
+						this.articles[index] = null;
+						createArticleAsync(data.data[index].name, data.data[index].permlink).then(function(this: any, index: number, article: steem.Post)
 						{
-							console.log('async');
-								Vue.set(this.articles, index, article);
+								Vue.set(this.articles, index, new BlogEntry(article));
+							// for testing async
+							// setTimeout(function(this: any){
+							// 	Vue.set(this.articles, index, new BlogEntry(article));}.bind(this), Math.random()*5000);
 						}.bind(this, index));
 					}
 				})

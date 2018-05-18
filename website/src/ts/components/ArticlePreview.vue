@@ -1,10 +1,7 @@
 <template>
 	<div class="container-fluid">
-		<div class="row" v-if="blogEntry">
-			<!-- <template v-if="loading">
-				<p>Loading</p>
-			</template>
-			<template v-else> -->
+		<div class="row">
+			<template v-if="blogEntry">
 				<div class="imageframe col-md-3">
 					<div class="blog-image">
 						<img :src="blogEntry.previewImage" style="border-radius: 5px;">
@@ -17,7 +14,12 @@
 					</div>
 					<span class="metadata"><i>by <a :href="AuthorBlogLink">{{blogEntry.author}}</a> on {{blogEntry.created | formatDate}}</i></span>
 				</div>
-			<!-- </template> -->
+			</template>
+			<template v-else>
+				<div style="margin: auto;">
+					<spinner style="margin: 10px;"></spinner>
+				</div>
+			</template>
 		</div>
 	</div>
 </template>
@@ -25,42 +27,25 @@
 <script lang="ts">
 	import Vue from "vue";
 	import VueRouter from 'vue-router';
-
+	import Spinner from './spinner.vue'
 	import {formatDate} from "../utils/utils";
+	import { BlogEntry } from "../blogentry";
 
 	export default Vue.extend({
-		props: [
-			'blogEntry'
-		],
-		data: function ()
-		{
-			return {
-				loading: true
-			}
-		},
+		props:[ 'blogEntry'],
+		components: { Spinner },
 		computed:
 		{
 			AuthorBlogLink() :string
 			{
 				return 'https://www.steemit.com/@' + this.blogEntry.author;
-			}
+			},
 		},
 		filters: 
 		{
 			formatDate: function (date: Date)
 			{
 				return formatDate(date);
-			}
-		},
-		watch:
-		{
-			blogEntry(newValue)
-			{
-				console.log('watch');
-				if(newValue)
-					this.loading = false;
-				else
-					this.loading = true;
 			}
 		}
 	});

@@ -2,7 +2,7 @@
 	<b-navbar toggleable="md" type="dark" variant="primary" sticky>
 		<div class="container"> 
 
-		<b-navbar-brand href="#/" style="font-family: 'Rajdhani', sans-serif; font-size: 40px; line-height:40px; font-weight: 700; font-style: normal;">
+		<b-navbar-brand href="#/Home" style="font-family: 'Rajdhani', sans-serif; font-size: 40px; line-height:40px; font-weight: 700; font-style: normal;">
 			<img src="img/logo.png" width="40" height="40" style="margin:5px;">
 			SteemMakers
 		</b-navbar-brand>
