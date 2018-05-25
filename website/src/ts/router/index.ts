@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import About from '../components/About.vue'
 import Article from '../components/Article.vue'
+import Authentication from '../components/Authentication.vue'
 import Blog from '../components/Blog.vue'
 import Contact from '../components/Contact.vue'
 import Courtesy from '../components/Courtesy.vue'
@@ -26,6 +27,12 @@ export default new Router({
 			name: 'Article',
 			props: true,
 			component: Article
+		},
+		{
+			path: '/authentication',
+			name: 'Authentication',
+			props: true,
+			component: Authentication
 		},
 		{
 			path: '/about',

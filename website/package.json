@@ -1,7 +1,7 @@
 {
   "name": "steemmakers",
   "scripts": {
-    "build": "webpack",
+    "build": "SET NODE_ENV=development&& webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jefpatat",
@@ -20,7 +20,9 @@
     "@types/sanitize-html": "^1.14.0",
     "bootstrap-vue": "^2.0.0-rc.9",
     "sanitize-html": "^1.18.2",
+    "sc2-sdk": "^1.0.2",
     "vue-loading-spinner": "^1.0.11",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   }
 }

@@ -20,6 +20,11 @@
 					<b-dropdown-item to="notices">Notices</b-dropdown-item>
 				</b-nav-item-dropdown>
 				<b-nav-item to="Contact">Contact</b-nav-item>
+				<b-nav-item v-if="!isLoggedIn" @click='login()'>Login</b-nav-item>
+				<b-nav-item-dropdown v-else text="Info" right >
+					<b-dropdown-item to="about">About</b-dropdown-item>
+					<b-dropdown-item to="faq">Logout</b-dropdown-item>
+				</b-nav-item-dropdown>
 			</b-navbar-nav>
 		</b-collapse>
 		</div>
@@ -27,6 +32,24 @@
 </template>
 
 <script lang="ts">
+	import Vue from "vue";
+	import { mapActions, mapGetters, Store } from 'vuex'
+	
+	export default Vue.extend({
+		data: function ()
+		{
+			return {
+				isLoggedIn: false,
+			}
+		},
+		methods:
+		{
+			login()
+			{
+				this.$store.dispatch('login');
+			}
+		}
+	});
 </script>
 
 <style scoped>

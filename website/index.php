@@ -29,8 +29,6 @@
 		<!-- investigate async and defer for loading js-->
 		<script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.0/src/js.cookie.min.js"></script>
 		<script type="text/javascript" src="js/config.js"></script>
-		<script type="text/javascript" src="js/sc2.min.js"></script>
-		<script type="text/javascript" src="js/sc2.js?filever=<?php echo filesize('./js/sc2.js')?>"></script>
 
 		<script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
 		<script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
