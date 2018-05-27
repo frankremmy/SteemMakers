@@ -11,7 +11,21 @@ export const store = new Vuex.Store({
 	strict: true,
 	state:
 	{
-		
+		username: null,
+		isLoggedIn: false
+	},
+	mutations:
+	{
+		authenticated (state, authenticationData)
+		{
+			state.username = authenticationData.username;
+			state.isLoggedIn = true;
+		},
+		logout (state)
+		{
+			state.isLoggedIn = false;
+			state.username = null;
+		}
 	},
 	actions:
 	{

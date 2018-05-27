@@ -20,8 +20,10 @@
 		mounted: function ()
 		{
 			let accessToken = this.$route.query.access_token;
-			let username = this.$route.query.username;
+			this.$store.commit('authenticated', {username: this.$route.query.username});
 			let expires_in = this.$route.query.expires_in;
+
+			this.$router.push('home');
 		}
 	});
 </script>
