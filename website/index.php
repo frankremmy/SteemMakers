@@ -1,60 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
+	<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="img/favicon/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+		<link rel="manifest" href="img/favicon/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
 
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-		<script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Rajdhani:700" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,400i,500,700|Lato:400,400i,700,700i,900|Righteous' media='all' rel='stylesheet' type='text/css'/>
+		<link href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' rel='stylesheet'/>
+
+		<!-- investigate async and defer for loading js-->
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.0/src/js.cookie.min.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
 
 		<script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
-
-		<script type="text/javascript" src="js/script.js?t=1234"></script> 
-		<script type="text/javascript" src="js/image.js"></script>
-		<script type="text/javascript" src="js/body.js"></script>
-		<script src="https://steemit.github.io/sc2-angular/sc2.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-		<script type="text/javascript" src="js/sc2.min.js"></script>
-		<script type="text/javascript" src="js/sc2.js"></script>
-		<link href="css/bootstrap.min.css" rel="stylesheet"> 
-		<link href="css/main.css" rel="stylesheet"> 
+		<script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
+		<script type="text/javascript" src="js/steem.js?filever=<?php echo filesize('./js/steem.js')?>"></script>
 	</head>
-	<body class="bg-secondary">
-		<?php include("navbar.php"); ?>
-		<div class="container">
-			<?php
-				require_once('./src/database.php'); 
-				require_once('./src/paginator.php'); 
-				$database = new Database();
-				
-				$query = "SELECT name, p.permlink FROM (SELECT * FROM approved_posts) p INNER JOIN users u ON p.author_id = u.id ORDER BY p.reviewed_on DESC";
-
-				$limit = ( isset( $_GET['limit'] ) ) ? $_GET['limit'] : 5;
-				$page = ( isset( $_GET['page'] ) ) ? $_GET['page'] : 1;
-				$links = 3;
-
-				$paginator = new Paginator( $database, $query );
-				$results = $paginator->getData( $limit, $page );
-				for ($i = 0; $i < count($results->data); $i++)
-				{
-					echo '<div class="row" id="article',$i,'">';
-					echo '<div class="spinner" id="spinner',$i,'" style="float: none; margin: 0 auto;"></div>';
-					echo '<script>';
-					echo '  storyPreview(',$i,', \'',$results->data[$i]['name'],'\', \'',$results->data[$i]['permlink'],'\');';
-					echo '</script>';
-					echo '</div>';
-				}
-			?>
-		</div>
-		<div class="text-center">
-			<div class="d-inline-block">
-				<?php
-					echo $paginator->createLinks( $links );
-				?>
-			</div>
-		</div>
-		<?php include("footer.php"); ?>
+	
+	<body>
+		<app></app>
 	</body>
+	
+	<script src="./dist/build.js?filever=<?php echo filesize('./dist/build.js')?>"></script>
 </html>

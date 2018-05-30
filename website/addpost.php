@@ -10,33 +10,19 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-		<script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+		<?php include("./src/globalhead.php"); ?>
 
 		<script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+		<script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
+		<script type="text/javascript" src="js/steem.js?filever=<?php echo filesize('./js/steem.js')?>"></script>
 
-		<script type="text/javascript" src="js/script.js"></script> 
-		<script type="text/javascript" src="js/image.js"></script>
-		<script type="text/javascript" src="js/body.js"></script>
-		<script type="text/javascript" src="js/sc2.min.js"></script>
-		<script type="text/javascript" src="js/sc2.js"></script>
-		<link href="css/bootstrap.min.css" rel="stylesheet"> 
-		<link href="css/main.css" rel="stylesheet">
-		<script type="text/javascript">
-
-		</script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<body class="bg-secondary">
 		<?php include("navbar.php"); ?>
 		
 		<div class="container" style="width: 75%;">
-			<form id="addArticle" action="submitpost.php">
+			<form id="addArticle" action="src/submitpost.php">
 				<div class="form-group">
 					<label class="control-label">Article link</label>
 					<div class="input-group">
@@ -52,7 +38,7 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label">Permlink</label>
-					<input type="text" class="form-control" placeholder="Permlink" id="permLinkBox" name="permlink">
+					<input type="text" class="form-control" placeholder="Permlink" id="permlinkBox" name="permlink">
 				</div>
 				<div class="form-group">
 					<label class="control-label">Discoverer</label>
@@ -62,6 +48,7 @@
 						</div>
 						<input type="text" class="form-control" placeholder="Discoverer" id="discovererBox" name="discoverer">
 					</div>
+					<small class="form-text text-muted">If the link was proposed to you, for example on discord in 'request-review', please use the original finder's id if it matches to a steem id.</small>
 				</div>
 				<div class="form-group">
 					<button type="button" class="btn btn-primary" id="ValidateButton">Validate</button>
@@ -109,7 +96,7 @@
 				?>
 				</div>
 
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<button type="submit" class="btn btn-primary" id="SubmitButton">Submit</button>
 				<div class="form-group">
 					<br>
 					<ul id="submit-messages"></ul>
@@ -126,8 +113,8 @@
 		<script>
 			$(function ()
 			{
-				var validAuthorAndPermlink = false;
-				var validDiscoverer = false;
+				var isInformationValid = false;
+
 				$('#ParseLinkButton').on('click', function (e)
 				{
 					var regex = new RegExp("(?<=@)(.*)(\/)(.*)");
@@ -136,7 +123,7 @@
 					if(matched && matched.length === 4)
 					{
 						$('#authorBox').val(matched[1]);
-						$('#permLinkBox').val(matched[3]);
+						$('#permlinkBox').val(matched[3]);
 						$('#linkBox').addClass('is-valid').removeClass('is-invalid');
 					}
 					else
@@ -145,70 +132,34 @@
 					}
 				});
 
+				function OnInformationChanged()
+				{
+					isInformationValid = false;
+					$('#validation-messages').empty();
+					$('#submit-messages').empty();
+				}
+
 				$('#authorBox').on('change keyup paste', function ()
 				{
-					$('#authorBox').removeClass('is-valid');
-					validAuthorAndPermlink = false;
+					$('#authorBox').removeClass('is-valid').removeClass('is-invalid');
+					OnInformationChanged();
 				});
 				
-				$('#permLinkBox').on('change keyup paste', function ()
+				$('#permlinkBox').on('change keyup paste', function ()
 				{
-					$('#permLinkBox').removeClass('is-valid');
-					validAuthorAndPermlink = false;
+					$('#permlinkBox').removeClass('is-valid').removeClass('is-invalid');
+					OnInformationChanged();
 				});
 
-				$('#ValidateButton').on('click', function (e)
+				$('#discovererBox').on('change keyup paste', function ()
 				{
-					$('#validation-messages').empty();
-					$('#article1').empty();
-					$('#article1').append($('<div class="spinner" id="spinner1" style="float: none; margin: 0 auto;"></div>'));
-
-					var result = storyPreview(1, $('#authorBox').val(), $('#permLinkBox').val(), function(success)
-					{
-						if(success)
-						{
-							$('#authorBox').removeClass('is-invalid').addClass('is-valid');
-							$('#permLinkBox').removeClass('is-invalid').addClass('is-valid');
-							$('#validation-messages').append('<li class="text-success">Article found on the blockchain</li>');
-							validAuthorAndPermlink = true;
-						}
-						else
-						{
-							$('#authorBox').removeClass('is-valid').addClass('is-invalid');
-							$('#permLinkBox').removeClass('is-valid').addClass('is-invalid');
-							$('#article1 ').append($('<li class="text-danger">Article not found on the blockchain</li>'));
-							validAuthorAndPermlink = false;
-						}
-
-						if($('#discovererBox').val())
-						{
-							steem.api.getAccounts([$('#discovererBox').val()], function(err, result)
-							{
-								if(!err & result.length === 1)
-								{
-									$('#discovererBox').removeClass('is-invalid').addClass('is-valid');
-									$('#validation-messages').append('<li class="text-success">Discoverer found on the blockchain</li>');
-									validDiscoverer = true;
-								}
-								else
-								{
-									validDiscoverer = false;
-									$('#discovererBox').removeClass('is-valid').addClass('is-invalid');
-									$('#validation-messages').append('<li class="text-danger">Discoverer not found on the blockchain</li>');
-								}
-							});
-						}
-						else
-						{
-							$('#validation-messages').append('<li class="text-success">Your account will be used as discoverer</li>');
-							$('#discovererBox').removeClass('is-invalid').addClass('is-valid');
-							validDiscoverer = true;
-						}
-					});
+					$('#discovererBox').removeClass('is-valid').removeClass('is-invalid');
+					OnInformationChanged();
 				});
 
 				$("#categoryselector :input").change(function()
 				{
+					$('#submit-messages').empty();
 					$('#keywordCheckBoxes').find('input:checkbox').prop('checked', false);
 					if($("#DIYRadio").is(':checked'))
 					{
@@ -223,35 +174,151 @@
 					return false;
 				});
 
+				$("#keywordCheckBoxes input[type=checkbox]").change(function()
+				{
+					$('#submit-messages').empty();
+				});
+
+				$('#ValidateButton').on('click', function (e)
+				{
+					databaseCheckCompleted = false;
+					articleCheckCompleted = false;
+					discovererCheckCompleted = false;
+					databaseCheckPassed = false;
+					articleCheckPassed = false;
+					discovererCheckPassed = false;
+
+					$('#ValidateButton').html("<i class='fa fa-spinner fa-spin'></i> Validating");
+
+					$('#validation-messages').empty();
+					$('#article1').empty();
+
+					// Verify if article not present in DB
+					$.ajax(
+					{
+						type: 'POST',
+						url: 'src/verifyarticle.php',
+						data: { author: $('#authorBox').val(), permlink: $('#permlinkBox').val() }
+					})
+					.done(function(response)
+					{
+						if(response.type === 'success')
+						{
+							$('#validation-messages').append('<li class="text-success">New article, not present in the database.</li>');
+							databaseCheckPassed = true;
+						}
+						else
+						{
+							$('#validation-messages').append('<li class="text-danger">' + response.message + '</li>');
+						}
+						databaseCheckCompleted = true;
+						validationComplete();
+					})
+					.fail(function(data)
+					{
+						if (data.responseText !== '')
+						{
+							$('#validation-messages').append('<li class="text-danger">An error occured while checking the database' + data.responseText + '</li>');
+						}
+						else
+						{
+							$('validation-messages').append('<li class="text-danger">An error occured, the system couldn\'t check if your entry already exists.</li>');
+						}
+						databaseCheckCompleted = true;
+						validationComplete();
+					});
+
+					// Verify if article exists on the blockchain
+					var result = storyPreview(1, $('#authorBox').val(), $('#permlinkBox').val(), function(post)
+					{
+						if(post !== null)
+						{
+							$('#authorBox').removeClass('is-invalid').addClass('is-valid');
+							$('#permlinkBox').removeClass('is-invalid').addClass('is-valid');
+							$('#validation-messages').append('<li class="text-success">Article found on the blockchain</li>');
+
+							var timeDiff = new Date(post.cashout_time) - Date.now();
+							var diffDays = timeDiff / (1000 * 3600 * 24); 
+
+							if(diffDays > 1)
+							{
+								articleCheckPassed = true;
+								$('#validation-messages').append('<li class="text-success">Article is less than 6 days old</li>');
+							}
+							else
+							{
+								$('#validation-messages').append($('<li class="text-danger">Article is more than 6 days old</li>'));
+							}
+						}
+						else
+						{
+							$('#authorBox').removeClass('is-valid').addClass('is-invalid');
+							$('#permlinkBox').removeClass('is-valid').addClass('is-invalid');
+							$('#validation-messages').append($('<li class="text-danger">Article (combination author/permlink) not found on the blockchain</li>'));
+						}
+						articleCheckCompleted = true;
+						validationComplete();
+					});
+
+					// Verify if the discoverer is valid
+					if($('#discovererBox').val())
+					{
+						steem.api.getAccounts([$('#discovererBox').val()], function(err, result)
+						{
+							if(!err & result.length === 1)
+							{
+								$('#discovererBox').removeClass('is-invalid').addClass('is-valid');
+								$('#validation-messages').append('<li class="text-success">Discoverer found on the blockchain</li>');
+								discovererCheckPassed = true;
+							}
+							else
+							{
+								$('#discovererBox').removeClass('is-valid').addClass('is-invalid');
+								$('#validation-messages').append('<li class="text-danger">Discoverer not found on the blockchain</li>');
+								validDiscoverer = false;
+							}
+							discovererCheckCompleted = true;
+							validationComplete();
+						});
+					}
+					else
+					{
+						$('#validation-messages').append('<li class="text-success">Your account will be used as discoverer</li>');
+						$('#discovererBox').removeClass('is-invalid').addClass('is-valid');
+						discovererCheckPassed = true;
+						discovererCheckCompleted = true;
+						validationComplete();
+					}
+
+					function validationComplete()
+					{
+						if (databaseCheckCompleted && articleCheckCompleted && discovererCheckCompleted)
+						{
+							isInformationValid = databaseCheckPassed && articleCheckPassed && discovererCheckPassed;
+							$('#ValidateButton').html("Validate");
+						}
+					}
+				});
+
 				$('#addArticle').submit(function(event)
 				{
 					event.preventDefault();
 
 					$('#submit-messages').empty();
 
-					var inputValid = true;
-					if(!validAuthorAndPermlink)
+					if(!isInformationValid)
 					{
-						$('#submit-messages').append('<li class="text-danger">Combination author and permlink not valid</li>');
-						inputValid = false;
-					}
-
-					if(!validDiscoverer)
-					{
-						$('#submit-messages').append('<li class="text-danger">Discoverer is not valid</li>');
-						inputValid = false;
+						$('#submit-messages').append('<li class="text-danger">Validate the information first.</li>');
+						return false;
 					}
 
 					if($('#keywordCheckBoxes input:checked').length === 0)
 					{
 						$('#submit-messages').append('<li class="text-danger">Select at least one keyword</li>');
-						inputValid = false;
-					}
-
-					if(!inputValid)
-					{
 						return false;
 					}
+
+					$('#SubmitButton').html("<i class='fa fa-spinner fa-spin'></i> Submitting");
 
 					var formData = $('#addArticle').serialize();
 
@@ -263,20 +330,25 @@
 					})
 					.done(function(response)
 					{
+						isInformationValid = false;
 						$('#submit-messages').append('<li class="text-success">Article successfully committed</li>');
+						$('#SubmitButton').html("Submit");
 
-						validAuthorAndPermlink = false;
-						$('#linkBox').removeClass('is-valid')
-						$('#authorBox').removeClass('is-valid');
-						$('#permLinkBox').removeClass('is-valid');
-						$('#article1').empty();
 						$('#linkBox').val('');
+						$('#linkBox').removeClass('is-valid');
 						$('#authorBox').val('');
-						$('#permLinkBox').val('');
+						$('#authorBox').removeClass('is-valid');
+						$('#permlinkBox').val('');
+						$('#permlinkBox').removeClass('is-valid');
+						$('#discovererBox').val('');
+						$('#discovererBox').removeClass('is-valid');
+						$('#validation-messages').empty();
 						$('#keywordCheckBoxes').find('input:checkbox').prop('checked', false);
+						$('#article1').empty();
 					})
 					.fail(function(data)
 					{
+						$('#SubmitButton').html("Submit");
 						if (data.responseText !== '')
 						{
 							$('#submit-messages').append('<li class="text-success">',data.responseText,'</li>');

@@ -1,10 +1,16 @@
 
-bot/config/
-
 bot/node_modules/
 
 bot/package-lock\.json
 
-website/\.vscode/
-
 website/config/
+
+bot/config/config\.json
+
+*.test
+
+website/node_modules/
+
+website/dist/
+
+website/package-lock\.json

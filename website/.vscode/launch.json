@@ -1,0 +1,37 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+		{
+            "name": "vuejs: chrome",
+            "type": "chrome",
+			"request": "launch",
+			"url": "http://localhost",
+			//"url": "http://localhost/post.php?author=flash4yard&permlink=blinkit-or-logitech-rgb-keyboard-preparation",
+			//"url": "http://localhost/post.php?author=zadriel&permlink=or-or-wooden-watch-3dprinted-or-or",
+			//"url": "http://localhost/post.php?author=makerhacks&permlink=python-arcade-full-game-demonstration",
+			//"url": "http://localhost/post.php?author=jefpatat&permlink=view-your-favourite-content-on-the-steemmakers-website",
+			//"url": "http://localhost/post.php?author=wieske&permlink=5jl4z5-test",
+			//"url": "http://localhost/post.php?author=therascal&permlink=529b6dc0-2005-11e8-8d9c-0242ac110002",
+			//"url": "http://localhost/post.php?author=rasor&permlink=73clwotn",
+            "webRoot": "${workspaceFolder}",
+			"breakOnLoad": false,
+        },
+        {
+            "name": "Listen for XDebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9000
+        },
+        {
+            "name": "Launch currently open script",
+            "type": "php",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "port": 9000
+        }
+    ]
+}
