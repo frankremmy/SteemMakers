@@ -117,13 +117,13 @@
 
 				$('#ParseLinkButton').on('click', function (e)
 				{
-					var regex = new RegExp("(?<=@)(.*)(\/)(.*)");
+					var regex = new RegExp(".*\/@(.*)\/(.*)$");
 					var matched = regex.exec($('#linkBox').val());
 
 					if(matched && matched.length === 4)
 					{
-						$('#authorBox').val(matched[1]);
-						$('#permlinkBox').val(matched[3]);
+						$('#authorBox').val(matched[0]);
+						$('#permlinkBox').val(matched[1]);
 						$('#linkBox').addClass('is-valid').removeClass('is-invalid');
 					}
 					else
