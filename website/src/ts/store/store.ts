@@ -11,19 +11,31 @@ export const store = new Vuex.Store({
 	strict: true,
 	state:
 	{
-		username: null,
-		isLoggedIn: false
+		isLoggedIn: false,
+		profileImage: null,
+		username: null,			// fixed
+		accountName: null,		// can be changed?
+		accessToken: '',
 	},
 	mutations:
 	{
 		authenticated (state, authenticationData)
 		{
-			state.username = authenticationData.username;
 			state.isLoggedIn = true;
+			state.username = authenticationData.username;
+			state.accessToken = authenticationData.accessToken;
+			steemConnectManager.accessToken = authenticationData.accessToken;
+			steemConnectManager.requestProfileInfoUpdate();
+			
+		},
+		profileUpdated(state, profileData)
+		{
+			state.profileImage = profileData;
 		},
 		logout (state)
 		{
 			state.isLoggedIn = false;
+			state.profileImage = null;
 			state.username = null;
 		}
 	},
@@ -32,6 +44,6 @@ export const store = new Vuex.Store({
 		login (context)
 		{
 			steemConnectManager.login();
-		}
+		},
 	}
-})
+});

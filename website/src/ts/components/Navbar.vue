@@ -21,9 +21,10 @@
 				</b-nav-item-dropdown>
 				<b-nav-item to="Contact">Contact</b-nav-item>
 				<b-nav-item v-if="!isLoggedIn" @click='login()'>Login</b-nav-item>
-				<b-nav-item-dropdown v-else :text="username" right >
+				<b-nav-item-dropdown v-if="isLoggedIn" :text="username" right >
 					<b-dropdown-item @click='logout()'>Logout</b-dropdown-item>
 				</b-nav-item-dropdown>
+				<b-nav-item v-if="isLoggedIn" class="nav-item d-none d-md-block"><img :src="profileImage" height="40" width="40" style="margin-right: 10px; border-radius: 5px;"></b-nav-item>
 			</b-navbar-nav>
 		</b-collapse>
 		</div>
@@ -43,6 +44,7 @@
 		computed:
 		{
 			isLoggedIn() :boolean { return this.$store.state.isLoggedIn; },
+			profileImage() :boolean { return this.$store.state.profileImage; },
 			username() :string { return this.$store.state.username; }
 		},
 		methods:
@@ -69,5 +71,24 @@
 	{
 		padding: 0;
 		margin:0;
+		background-color: black;
 	}
+
+@media (min-width: 768px)
+{
+	/* 	Copy of .align-items-end
+		To be able to apply on large screens and not apply on small screens (causes right align in hamburger) */
+	 .navbar-items-bottom
+	{
+		-webkit-box-align:end !important;
+		-ms-flex-align:end !important;
+		align-items:flex-end !important;
+	} 
+	
+	.navbar-collapse > ul 
+	{
+		height: 56px;
+		
+	}
+}
 </style>

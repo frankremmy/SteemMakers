@@ -19,8 +19,11 @@
 	export default Vue.extend({
 		mounted: function ()
 		{
-			let accessToken = this.$route.query.access_token;
-			this.$store.commit('authenticated', {username: this.$route.query.username});
+			this.$store.commit('authenticated', 
+				{
+					username: this.$route.query.username,
+					accessToken: this.$route.query.access_token
+				});
 			let expires_in = this.$route.query.expires_in;
 
 			this.$router.push('home');
