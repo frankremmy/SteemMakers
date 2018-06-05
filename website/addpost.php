@@ -120,10 +120,10 @@
 					var regex = new RegExp(".*\/@(.*)\/(.*)$");
 					var matched = regex.exec($('#linkBox').val());
 
-					if(matched && matched.length === 4)
+					if(matched && matched.length === 3)
 					{
-						$('#authorBox').val(matched[0]);
-						$('#permlinkBox').val(matched[1]);
+						$('#authorBox').val(matched[1]);
+						$('#permlinkBox').val(matched[2]);
 						$('#linkBox').addClass('is-valid').removeClass('is-invalid');
 					}
 					else
