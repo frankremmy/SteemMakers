@@ -2,9 +2,8 @@
 	<b-navbar toggleable="md" type="dark" variant="primary" sticky>
 		<div class="container"> 
 
-		<b-navbar-brand href="#/Home" style="font-family: 'Rajdhani', sans-serif; font-size: 40px; line-height:40px; font-weight: 700; font-style: normal;">
-			<img src="img/logo.png" width="40" height="40" style="margin:5px;">
-			SteemMakers
+		<b-navbar-brand href="#/Home">
+			<img src="img/navbar-logo.png">
 		</b-navbar-brand>
 
 		<b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
@@ -22,6 +21,7 @@
 				<b-nav-item to="Contact">Contact</b-nav-item>
 				<b-nav-item v-if="!isLoggedIn" @click='login()'>Login</b-nav-item>
 				<b-nav-item-dropdown v-if="isLoggedIn" :text="username" right >
+					<b-dropdown-item v-if="!isReviewer" to="SubmitPost">Submit post</b-dropdown-item>
 					<b-dropdown-item @click='logout()'>Logout</b-dropdown-item>
 				</b-nav-item-dropdown>
 				<b-nav-item v-if="isLoggedIn" class="nav-item d-none d-md-block"><img :src="profileImage" height="40" width="40" style="margin-right: 10px; border-radius: 5px;"></b-nav-item>
@@ -44,6 +44,7 @@
 		computed:
 		{
 			isLoggedIn() :boolean { return this.$store.state.isLoggedIn; },
+			isReviewer() :boolean { return this.$store.state.isReviewer; },
 			profileImage() :boolean { return this.$store.state.profileImage; },
 			username() :string { return this.$store.state.username; }
 		},

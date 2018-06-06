@@ -9,7 +9,6 @@ $request_method=$_SERVER["REQUEST_METHOD"];
 switch($request_method)
 {
 	case 'GET':
-		// Retrive Products
 		if(!empty($_GET["page"]))
 		{
 			$page=intval($_GET["page"]);
@@ -30,7 +29,6 @@ switch($request_method)
 function get_articles($page=0)
 {
 	global $connection;
-	$query="SELECT * FROM employee";
 
 	$database = new Database();
 				

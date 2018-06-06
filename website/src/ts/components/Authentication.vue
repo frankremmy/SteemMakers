@@ -19,14 +19,24 @@
 	export default Vue.extend({
 		mounted: function ()
 		{
-			this.$store.commit('authenticated', 
+			fetch("./api/v1/profiles.php?usernames=" + this.$route.query.username)
+				.then(response => response.json())
+				.then((data) =>
 				{
-					username: this.$route.query.username,
-					accessToken: this.$route.query.access_token
-				});
-			let expires_in = this.$route.query.expires_in;
+					let isReviewer :boolean = false;
+					if(data.length > 0 && data[0].reviewer == 1)
+					{
+						isReviewer = true;
+					}
+					this.$store.commit('authenticated', 
+						{
+							username: this.$route.query.username,
+							accessToken: this.$route.query.access_token,
+							reviewer: isReviewer
+						});
+					this.$router.push('home');
+				})
 
-			this.$router.push('home');
 		}
 	});
 </script>

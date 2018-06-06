@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
 	state:
 	{
 		isLoggedIn: false,
+		isReviewer: false,
 		profileImage: null,
 		username: null,			// fixed
 		accountName: null,		// can be changed?
@@ -24,6 +25,7 @@ export const store = new Vuex.Store({
 			state.isLoggedIn = true;
 			state.username = authenticationData.username;
 			state.accessToken = authenticationData.accessToken;
+			state.isReviewer = authenticationData.isReviewer;
 			steemConnectManager.accessToken = authenticationData.accessToken;
 			steemConnectManager.requestProfileInfoUpdate();
 			

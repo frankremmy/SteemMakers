@@ -27,7 +27,7 @@
 <script lang="ts">
 	import Vue from "vue";
 	import VueRouter from 'vue-router';
-	import Spinner from './spinner.vue'
+	import Spinner from './spinner.vue';
 	import {formatDate} from "../utils/utils";
 	import { BlogEntry } from "../blogentry";
 

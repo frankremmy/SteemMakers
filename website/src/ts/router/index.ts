@@ -10,6 +10,7 @@ import Delegation from '../components/Delegation.vue'
 import FAQ from '../components/FAQ.vue'
 import Home from '../components/Home.vue'
 import Notices from '../components/Notices.vue'
+import SubmitPost from '../components/SubmitPost.vue'
 import Trail from '../components/Trail.vue'
 
 Vue.use(Router)
@@ -68,6 +69,11 @@ export default new Router({
 			path: '/notices',
 			name: 'Notices',
 			component: Notices
+		},
+		{
+			path: '/submitpost',
+			name: 'SubmitPost',
+			component: SubmitPost
 		},
 		{
 			path: '/trail',

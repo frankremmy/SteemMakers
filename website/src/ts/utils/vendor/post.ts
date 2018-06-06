@@ -4,6 +4,7 @@ declare namespace steem
 	{
 		author: string;
 		body: string;
+		cashout_time: string;
 		created: string;
 		permlink: string;
 		title: string;

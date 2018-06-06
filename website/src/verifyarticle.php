@@ -3,10 +3,10 @@
 	require_once('database.php');
 	$database = new Database();
 
+	$responseArray = array('type' => 'danger', 'message' => 'An error occured');
+
 	if(IsAuthorizedReviewer())
 	{
-		$responseArray = array('type' => 'danger', 'message' => 'An error occured');
-
 		if (!empty($_POST['author']) && !empty($_POST['permlink']))
 		{
 			try
@@ -25,7 +25,7 @@
 			}
 			catch (\Exception $e)
 			{
-				$responseArray = array('type' => 'danger', 'message' => 'An error occured');
+				$responseArray = array('type' => 'danger', 'message' => 'The query failed');
 			}
 		}
 		else
@@ -45,5 +45,10 @@
 		{
 			echo $responseArray['message'];
 		}
+	}
+	else
+	{
+		$responseArray = array('type' => 'danger', 'message' => 'User not authorized.');
+		echo $responseArray['message'];
 	};
 ?>
