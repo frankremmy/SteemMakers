@@ -9,9 +9,9 @@
 
 <script lang="ts">
 	import Vue from "vue";
-	import ArticlePreview from './ArticlePreview.vue'
+	import ArticlePreview from './ArticlePreview.vue';
 	import {getBlogArticles, formatDate, createArticleAsync} from "../utils/utils";
-	import {BlogEntry} from '../blogentry'
+	import {BlogEntry} from '../blogentry';
 	
 	export default Vue.extend({
 		components: {ArticlePreview},

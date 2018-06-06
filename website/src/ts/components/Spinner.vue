@@ -12,7 +12,7 @@
 		props:
 		{
 			size: { default: '40px' },
-			squareColor: { default: 'white' },
+			squareColor: { default: '#22799F' },
 			shadowColor: { default: 'black' }
 		},
 		computed: {

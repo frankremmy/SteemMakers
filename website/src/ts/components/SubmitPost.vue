@@ -41,7 +41,8 @@
 					<ul id="validation-messages">
 						<li v-for='(message, index) in validationMessages' :key='index' v-bind:class="message.classes">{{ message.text }}</li>
 					</ul>
-					<div id="article1">
+					<div class="row">
+						<ArticlePreview v-if="article !== null" v-bind:blogEntry="article"></ArticlePreview>
 					</div>
 				</div>
 				<!--
@@ -97,14 +98,17 @@
 <script lang="ts">
 	import Vue from "vue";
 	import axios from 'axios';
-	import Spinner from './spinner.vue'
+	import ArticlePreview from './ArticlePreview.vue';
+	import {BlogEntry} from '../blogentry';
+	import Spinner from './spinner.vue';
 	import {createArticleAsync} from "../utils/utils";
 	
 	export default Vue.extend({
-		components: { Spinner },
+		components: { ArticlePreview, Spinner },
 		data ()
 		{
 			return {
+				article: null,
 				author:'',
 				authorClasses:'',
 				articleCheckCompleted: false,
@@ -209,6 +213,7 @@
 						this.validationMessages.push({text: 'Article is more than 6 days old.', classes: 'text-danger'});
 					}
 
+					this.article = new BlogEntry(article);
 					this.articleCheckCompleted = true;
 					this.validationComplete();
 				}.bind(this))
