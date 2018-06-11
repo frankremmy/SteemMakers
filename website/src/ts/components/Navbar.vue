@@ -21,7 +21,7 @@
 				<b-nav-item to="Contact">Contact</b-nav-item>
 				<b-nav-item v-if="!isLoggedIn" @click='login()'>Login</b-nav-item>
 				<b-nav-item-dropdown v-if="isLoggedIn" :text="username" right >
-					<b-dropdown-item v-if="!isReviewer" to="SubmitPost">Submit post</b-dropdown-item>
+					<b-dropdown-item v-if="isReviewer" to="SubmitPost">Submit post</b-dropdown-item>
 					<b-dropdown-item @click='logout()'>Logout</b-dropdown-item>
 				</b-nav-item-dropdown>
 				<b-nav-item v-if="isLoggedIn" class="nav-item d-none d-md-block"><img :src="profileImage" height="40" width="40" style="margin-right: 10px; border-radius: 5px;"></b-nav-item>
@@ -56,7 +56,7 @@
 			},
 			logout()
 			{
-				this.$store.commit('logout');
+				this.$store.dispatch('logout');
 			}
 		}
 	});

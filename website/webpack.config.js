@@ -16,14 +16,19 @@ function createPlugins()
 
 	if (process.env.NODE_ENV === 'production')
 	{
-		
+		plugins.push(
+			new webpack.DefinePlugin(
+			{
+				SC_CALLBACK_URL: '"https://www.steemmakers.com/test/#/authentication"'
+			})
+		);
 	}
 	else
 	{
 		plugins.push(
 			new webpack.DefinePlugin(
 			{
-				SC_CALLBACK_URL: '"http://localhost/#/authentication"'
+				SC_CALLBACK_URL: '"http://app.localhost.com/#/authentication"'
 			})
 		);
 	}

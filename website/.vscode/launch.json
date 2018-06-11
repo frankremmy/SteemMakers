@@ -8,7 +8,7 @@
             "name": "vuejs: chrome",
             "type": "chrome",
 			"request": "launch",
-			"url": "http://localhost/#/submitpost",
+			"url": "http://app.localhost.com/#/submitpost",
             "webRoot": "${workspaceFolder}",
 			"breakOnLoad": false,
         },

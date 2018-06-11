@@ -13,5 +13,9 @@ let v = new Vue({
 	el: 'app',
 	router,
 	store: store,
-	components:{App}
+	components:{App},
+	beforeCreate()
+	{
+		this.$store.dispatch('initialiseStore');
+	}
 });
