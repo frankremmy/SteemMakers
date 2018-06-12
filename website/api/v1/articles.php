@@ -38,7 +38,15 @@ function get_articles($page=0)
 	$page = ( isset( $_GET['page'] ) ) ? $_GET['page'] : 1;
 
 	$paginator = new Paginator( $database, $query );
-	$results = $paginator->getData( $limit, $page );
+
+	if(is_numeric($limit) && is_numeric($page))
+	{
+		$results = $paginator->getData( (int)$limit, (int)$page );
+	}
+	else
+	{
+		header("HTTP/1.0 400 Bad request");
+	}
 
 	header('Content-Type: application/json');
 	echo json_encode($results);

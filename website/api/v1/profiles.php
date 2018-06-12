@@ -28,19 +28,17 @@ switch($request_method)
 
 function get_profiles($usernames)
 {
-	global $connection;
-
 	$database = new Database();
 
-	$usernamesString = "'" . implode("','", $usernames) . "'";
+	$placeholders = rtrim(str_repeat('?, ', count($usernames)), ', ') ;
 
 	$query = "SELECT u.id, u.name, r.enabled as reviewer
 	FROM users u
 	INNER JOIN reviewers r
 		ON u.id=r.user_id
-	 WHERE u.name IN (" . $usernamesString . ")";
+	 WHERE u.name IN ($placeholders)";
 	 
-	$results = $database->select( $query );
+	$results = $database->select( $query, $usernames);
 
 	header('Content-Type: application/json');
 	echo json_encode($results);

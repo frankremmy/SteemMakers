@@ -2,63 +2,59 @@
 
 class Database
 {
-    protected static $connection;
+	protected static $pdo = null;
 
-    public function connect()
-    {    
-        if(!isset(self::$connection))
-        {
-            $config = parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/config/database.ini');
-            self::$connection = new mysqli($config['servername'],$config['username'],$config['password'],$config['dbname']);
+	public function connect()
+	{
+		if(!isset(self::$pdo))
+		{
+			try
+			{
+				$config = parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/config/database.ini');
+				self::$pdo = new PDO('mysql:host=' . $config['servername'] . ';dbname=' . $config['dbname'] . ';charset=utf8mb4', $config['username'], $config['password']);
+				self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				self::$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			}
+			catch (PDOException $e)
+			{
+				self::$pdo = null;
+				print "Error!: " . $e->getMessage() . "<br/>";
+				die();
+			}
+		}
 
-            if (mysqli_connect_errno())
-  {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-  }
-        }
+		return self::$pdo;
+	}
 
-        if(self::$connection === false)
-        {
-            return false;
-        }
+	private function query(string $statement, array $inputParameters)
+	{
+		$pdo = $this -> connect();
 
-        return self::$connection;
-    }
+		$stmt = $pdo->prepare($statement);
+		$stmt->execute($inputParameters);
+		return $stmt;
+	}
 
-    public function query($query)
-    {
-        $connection = $this -> connect();
+	public function select(string $statement, array $inputParameters)
+	{
+		$rows = array();
+		$result = $this -> query($statement, $inputParameters);
+		if($result === false)
+		{
+			return false;
+		}
+		foreach ($result as $row)
+		{
+			$rows[] = $row; 
+		}
+		return $rows;
+	}
 
-        $result = $connection -> query($query);
-        if (!$result)
-        {
-            echo "<p>There was an error in query: $query</p>";
-            echo $connection->error;
-        }
-
-        return $result;
-    }
-
-    public function select($query)
-    {
-        $rows = array();
-        $result = $this -> query($query);
-        if($result === false)
-        {
-            return false;
-        }
-        while ($row = $result -> fetch_assoc())
-        {
-            $rows[] = $row;
-        }
-        return $rows;
-    }
-
-    public function error()
-    {
-        $connection = $this -> connect();
-        return $connection -> error;
-    }
+	public function error()
+	{
+		$connection = $this -> connect();
+		return $connection -> error;
+	}
 }
 
 ?>
