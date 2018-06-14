@@ -1,7 +1,7 @@
 import {MarkdownContentParser} from './utils/markdowncontentparser';
 
 export class BlogEntry
- {
+{
 	author: string = '';
 	authorBlog: string = '';
 	body: string = '';

@@ -45,51 +45,45 @@
 						<ArticlePreview v-if="article !== null" v-bind:blogEntry="article"></ArticlePreview>
 					</div>
 				</div>
-				<!--
 				<div class="form-group" id="categoryselector">
 					<label class="control-label">Category</label><br>
-					<label class="radio-inline"><input type="radio" name="category" value="makers" id="MakersRadio" checked>Makers</label>
-					<label class="radio-inline"><input type="radio" name="category" value="diy" id="DIYRadio">DIY</label>
+					<div v-for="(category, index) in categories" :key="index" style="display:inline;">
+						<label class="radio-inline" style="margin-left: 10px"><input type="radio" name="category" :value="category.name" v-model="selectedCategory">{{category.name}}</label>
+					</div>
 				</div>
-				<div id="keywordCheckBoxes">
+				<div>
 					<label class="control-label">Keywords</label>
-				<?php
-					require_once('./src/database.php');
-
-					$database = new Database();
-						
-					$query = "SELECT name FROM keywords_categories INNER JOIN keywords ON keywords_categories.keywords_id=keywords.id WHERE categories_id=1";
-					$queryResult = $database->select($query);
-					echo '<div class="form-group" id="makerscheckboxes">';
-					for ($i = 0; $i < count($queryResult); $i++)
-					{
-						echo
-						'<div class="form-check">
-							<label class="form-check-label" for="defaultCheck1"><input class="form-check-input" type="checkbox" name="keywords[]" value="',$queryResult[$i]['name'],'" id="defaultCheck1">',$queryResult[$i]['name'],'</label>
-						</div>';
-					}
-					echo '</div>';
-					$query = "SELECT name FROM keywords_categories INNER JOIN keywords ON keywords_categories.keywords_id=keywords.id WHERE categories_id=2";
-					$queryResult = $database->select($query);
-					echo '<div class="form-group" id="diycheckboxes" style="display: none">';
-					for ($i = 0; $i < count($queryResult); $i++)
-					{
-						echo
-						'<div class="form-check">
-							<label class="form-check-label" for="defaultCheck1"><input class="form-check-input" type="checkbox" name="keywords[]" value="" id="defaultCheck1">',$queryResult[$i]['name'],'</label>
-						</div>';
-					}
-					echo '</div>';
-
-				?>
+					<div v-for="(category, index) in categories" :key="index" ref="checkboxGroups">
+						<div class="form-group" :id="category.name" :hidden="!category.visible">
+							<div class="form-check">
+								<div v-for="(keyword, index) in category.keywords" :key="index">
+									<label class="form-check-label">
+										<input class="form-check-input" type="checkbox" :value="keyword" v-model="checkedKeywords">
+										{{keyword}}
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				-->
 
 				<button type="submit" class="btn btn-primary" id="SubmitButton">Submit</button>
 				<div class="form-group">
 					<br>
 					<ul id="submit-messages"></ul>
-				</div> 
+				</div>
+
+				<div class="form-group">
+					<button type="button" class="btn btn-primary" v-on:click="submit">
+						<div v-if="isSubmitting" >
+							<spinner size="15px" square-color="white" style="display: inline-block; margin-right: 5px; margin-bottom: -7px;"></spinner>
+							<span style="display: inline-block;">Submitting</span>
+						</div>
+						<div v-else>
+							Submit
+						</div>
+					</button>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -102,7 +96,7 @@
 	import {BlogEntry} from '../blogentry';
 	import Spinner from './spinner.vue';
 	import {createArticleAsync} from "../utils/utils";
-	
+
 	export default Vue.extend({
 		components: { ArticlePreview, Spinner },
 		data ()
@@ -121,12 +115,30 @@
 				permlinkClasses: '',
 				isAuthorValid: false,
 				isValidating: false,
+				isSubmitting: false,
 				validationMessages: [] as {text: string, classes :string}[],
+				categories: [] as {name: string, visible: boolean, keywords :string[]}[],
+				selectedCategory:'',
+				checkedKeywords: [],
 			}
+		},
+		created: function ()
+		{
+			fetch("./api/v1/keywords.php")
+				.then(response => response.json())
+				.then((data) =>
+				{
+					for(let i = 0; i < data.length; i++)
+					{
+						this.categories.push({name: data[i].category, visible: false, keywords: data[i].keywords})
+					}
+					this.categories[0].visible = true;
+					this.selectedCategory = this.categories[0].name;
+				});
 		},
 		watch:
 		{
-			link: function (val)
+			link: function(val)
 			{
 				if(val === '')
 				{
@@ -149,6 +161,15 @@
 					}
 				}
 			},
+			selectedCategory: function(val)
+			{
+				for(let i=0; i < this.categories.length; i++)
+				{
+					this.categories[i].visible = (this.categories[i].name == val);
+				}
+
+				this.checkedKeywords = [];
+			}
 		},
 		methods:
 		{
@@ -226,37 +247,6 @@
 					this.articleCheckCompleted = true;
 				 	this.validationComplete();
 				}.bind(this));
-
-				// var result = storyPreview(1, $('#authorBox').val(), $('#permlinkBox').val(), function(post)
-				// {
-				// 	if(post !== null)
-				// 	{
-				// 		$('#authorBox').removeClass('is-invalid').addClass('is-valid');
-				// 		$('#permlinkBox').removeClass('is-invalid').addClass('is-valid');
-				// 		$('#validation-messages').append('<li class="text-success">Article found on the blockchain</li>');
-
-				// 		var timeDiff = new Date(post.cashout_time) - Date.now();
-				// 		var diffDays = timeDiff / (1000 * 3600 * 24); 
-
-				// 		if(diffDays > 1)
-				// 		{
-				// 			articleCheckPassed = true;
-				// 			$('#validation-messages').append('<li class="text-success">Article is less than 6 days old</li>');
-				// 		}
-				// 		else
-				// 		{
-				// 			$('#validation-messages').append($('<li class="text-danger">Article is more than 6 days old</li>'));
-				// 		}
-				// 	}
-				// 	else
-				// 	{
-				// 		$('#authorBox').removeClass('is-valid').addClass('is-invalid');
-				// 		$('#permlinkBox').removeClass('is-valid').addClass('is-invalid');
-				// 		$('#validation-messages').append($('<li class="text-danger">Article (combination author/permlink) not found on the blockchain</li>'));
-				// 	}
-				// 	articleCheckCompleted = true;
-				// 	validationComplete();
-				// });
 			},
 			validationComplete()
 			{
@@ -264,6 +254,19 @@
 				{
 					this.isValidating = false;
 				}
+			},
+			submit()
+			{
+				var auth = 'Basic ' + new Buffer('username' + ':' + 'password').toString('base64');
+				axios.defaults.headers.common['Authorization'] = auth;
+
+				axios({url: 'src/submitpost.php', data: 'testdata', method: 'POST' })
+            .then(resp => {
+                debugger;
+            })
+            .catch(err => {
+                debugger;
+            })
 			}
 		}
 	});

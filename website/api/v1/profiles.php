@@ -8,7 +8,6 @@ $request_method=$_SERVER["REQUEST_METHOD"];
 switch($request_method)
 {
 	case 'GET':
-		// Retrive Products
 		if(!empty($_GET["usernames"]))
 		{
 			$usernamesArray = explode(',', $_GET["usernames"]);
