@@ -1,6 +1,6 @@
 <?php
-	require_once('../../src/utils.php');
-	require_once('../../src/database.php');
+	require_once('../../src/php/utils.php');
+	require_once('../../src/php/database.php');
 	$database = new Database();
 
 	$responseArray = array('type' => 'danger', 'message' => 'An error occured');

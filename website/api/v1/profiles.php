@@ -1,6 +1,6 @@
 <?php 
 
-require_once('../../src/database.php');  
+require_once('../../src/php/database.php');  
 
 
 $request_method=$_SERVER["REQUEST_METHOD"];
