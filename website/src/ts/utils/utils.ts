@@ -11,16 +11,9 @@ export function createPostHtml (author: string, permlink: string, callback: (err
 
 		if(!err && post.body !== "")
 		{
-			// let markdownContentParser = new MarkdownContentParser();
-			// markdownContentParser.Parse(post.body);
+			let blogEntry = new BlogEntry(post);
 
-			// result.author = post.author;
-			// result.body = markdownContentParser.body;
-			// result.created = new Date(post.created + '.000Z');
-			// result.title = post.title;
-			// result.url = post.url;
-
-			callback(null, result);
+			callback(null, blogEntry);
 		}
 		else
 		{
@@ -72,7 +65,7 @@ export function formatDate(date: Date) :string
 {
 	var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
-	var day = date.getDate();
+	var day = date.getDay();
 	var monthIndex = date.getMonth();
 	var year = date.getFullYear();
 

@@ -301,7 +301,7 @@
 					(response) =>
 					{
 						this.isSubmitting = false;
-						this.submissionMessages.push({text: 'Article successfully committed.', classes: 'text-danger'});
+						this.submissionMessages.push({text: 'Article successfully committed.', classes: 'text-success'});
 						this.isFormDisabled = true;
 					}, (error) =>
 					{
