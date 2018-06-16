@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Vuex, {Payload, Store} from 'vuex';
+import axios from 'axios';
+import Vuex from 'vuex';
 import {SteemConnectManager} from '../utils/vendor/SteemConnectManager';
 import * as Cookies from 'js-cookie';
 
@@ -28,6 +28,9 @@ export const store = new Vuex.Store({
 			state.accessToken = authenticationData.accessToken;
 			state.expiresInDays = authenticationData.expiresInDays;
 			steemConnectManager.accessToken = authenticationData.accessToken;
+
+			var auth = 'Basic ' + new Buffer(state.username + ':' + state.accessToken).toString('base64');
+			axios.defaults.headers.common['Authorization'] = auth;
 		},
 		isReviewer(state, isReviewer)
 		{

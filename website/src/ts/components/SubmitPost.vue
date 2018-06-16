@@ -2,89 +2,94 @@
 	<div class="container article">
 		<div class="row">
 			<form id="addArticle" action="src/submitpost.php" style="width: 100%">
-				<div class="form-group">
-					<label class="control-label">Article link</label>
-					<input	type="text" 
-							placeholder="Paste your link here"
-							class="form-control input-lg"
-							v-model="link"
-							v-bind:class="linkClasses">
-				</div>
-				<div class="form-group">
-					<label class="control-label">Author</label>
-					<input	type="text"
-							placeholder="Author"
-							class="form-control input-lg"
-							v-model="author"
-							v-bind:class="authorClasses">
-				</div>
-				<div class="form-group">
-					<label class="control-label">Permlink</label>
-					<input	type="text" 
-							placeholder="Permlink"
-							class="form-control input-lg"
-							v-model="permlink"
-							v-bind:class="permlinkClasses">
-				</div>
-				<div class="form-group">
-					<button type="button" class="btn btn-primary" v-on:click="validate">
-						<div v-if="isValidating" >
-							<spinner size="15px" square-color="white" style="display: inline-block; margin-right: 5px; margin-bottom: -7px;"></spinner>
-							<span style="display: inline-block;">Validating</span>
-						</div>
-						<div v-else>
-							Validate
-						</div>
-					</button>
-				</div>
-				<div class="form-group">
-					<ul id="validation-messages">
-						<li v-for='(message, index) in validationMessages' :key='index' v-bind:class="message.classes">{{ message.text }}</li>
-					</ul>
-					<div class="row">
-						<ArticlePreview v-if="article !== null" v-bind:blogEntry="article"></ArticlePreview>
+				<fieldset :disabled="isFormDisabled">
+					<div class="form-group">
+						<label class="control-label">Article link</label>
+						<input	type="text" 
+								placeholder="Paste your link here"
+								class="form-control input-lg"
+								v-model="link"
+								v-bind:class="linkClasses">
 					</div>
-				</div>
-				<div class="form-group" id="categoryselector">
-					<label class="control-label">Category</label><br>
-					<div v-for="(category, index) in categories" :key="index" style="display:inline;">
-						<label class="radio-inline" style="margin-left: 10px"><input type="radio" name="category" :value="category.name" v-model="selectedCategory">{{category.name}}</label>
+					<div class="form-group">
+						<label class="control-label">Author</label>
+						<input	type="text"
+								placeholder="Author"
+								class="form-control input-lg"
+								v-model="author"
+								v-bind:class="authorClasses">
 					</div>
-				</div>
-				<div>
-					<label class="control-label">Keywords</label>
-					<div v-for="(category, index) in categories" :key="index" ref="checkboxGroups">
-						<div class="form-group" :id="category.name" :hidden="!category.visible">
-							<div class="form-check">
-								<div v-for="(keyword, index) in category.keywords" :key="index">
-									<label class="form-check-label">
-										<input class="form-check-input" type="checkbox" :value="keyword" v-model="checkedKeywords">
-										{{keyword}}
-									</label>
+					<div class="form-group">
+						<label class="control-label">Permlink</label>
+						<input	type="text" 
+								placeholder="Permlink"
+								class="form-control input-lg"
+								v-model="permlink"
+								v-bind:class="permlinkClasses">
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-primary" v-on:click="validate">
+							<div v-if="isValidating" >
+								<spinner size="15px" square-color="white" style="display: inline-block; margin-right: 5px; margin-bottom: -7px;"></spinner>
+								<span style="display: inline-block;">Validating</span>
+							</div>
+							<div v-else>
+								Validate
+							</div>
+						</button>
+					</div>
+					<div class="form-group">
+						<ul id="validation-messages">
+							<li v-for='(message, index) in validationMessages' :key='index' v-bind:class="message.classes">{{ message.text }}</li>
+						</ul>
+						<div class="row">
+							<ArticlePreview v-if="article !== null" v-bind:blogEntry="article"></ArticlePreview>
+						</div>
+					</div>
+					<div class="form-group" id="categoryselector">
+						<label class="control-label">Category</label><br>
+						<div v-for="(category, index) in categories" :key="index" style="display:inline;">
+							<label class="radio-inline" style="margin-left: 10px"><input type="radio" name="category" :value="category.name" v-model="selectedCategory">{{category.name}}</label>
+						</div>
+					</div>
+					<div>
+						<label class="control-label">Keywords</label>
+						<div v-for="(category, index) in categories" :key="index" ref="checkboxGroups">
+							<div class="form-group" :id="category.name" :hidden="!category.visible">
+								<div class="form-check">
+									<div v-for="(keyword, index) in category.keywords" :key="index">
+										<label class="form-check-label">
+											<input class="form-check-input" type="checkbox" :value="keyword" v-model="selectedKeywords">
+											{{keyword}}
+										</label>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-
-				<button type="submit" class="btn btn-primary" id="SubmitButton">Submit</button>
-				<div class="form-group">
-					<br>
-					<ul id="submit-messages"></ul>
-				</div>
-
-				<div class="form-group">
-					<button type="button" class="btn btn-primary" v-on:click="submit">
-						<div v-if="isSubmitting" >
-							<spinner size="15px" square-color="white" style="display: inline-block; margin-right: 5px; margin-bottom: -7px;"></spinner>
-							<span style="display: inline-block;">Submitting</span>
-						</div>
-						<div v-else>
-							Submit
-						</div>
-					</button>
-				</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-primary" v-on:click="submit" :disabled="!isValid">
+							<div v-if="isSubmitting" >
+								<spinner size="15px" square-color="white" style="display: inline-block; margin-right: 5px; margin-bottom: -7px;"></spinner>
+								<span style="display: inline-block;">Submitting</span>
+							</div>
+							<div v-else>
+								Submit
+							</div>
+						</button>
+					</div>
+					<div class="form-group">
+						<ul>
+							<li v-for='(message, index) in submissionMessages' :key='index' v-bind:class="message.classes">{{ message.text }}</li>
+						</ul>
+					</div>
+				</fieldset>
 			</form>
+			<div class="form-group">
+				<button type="button" class="btn btn-primary" v-on:click="submitAnother" :hidden="!isFormDisabled">
+					Submit another article
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -114,12 +119,15 @@
 				permlink: '',
 				permlinkClasses: '',
 				isAuthorValid: false,
+				isFormDisabled: false,
 				isValidating: false,
+				isValid: false,
 				isSubmitting: false,
 				validationMessages: [] as {text: string, classes :string}[],
 				categories: [] as {name: string, visible: boolean, keywords :string[]}[],
 				selectedCategory:'',
-				checkedKeywords: [],
+				selectedKeywords: [],
+				submissionMessages: [] as {text: string, classes :string}[]
 			}
 		},
 		created: function ()
@@ -140,6 +148,7 @@
 		{
 			link: function(val)
 			{
+				this.OnInformationChanged();
 				if(val === '')
 				{
 					this.linkClasses = '';
@@ -161,6 +170,14 @@
 					}
 				}
 			},
+			author: function(val)
+			{
+				this.OnInformationChanged();
+			},
+			permlink: function(val)
+			{
+				this.OnInformationChanged();
+			},
 			selectedCategory: function(val)
 			{
 				for(let i=0; i < this.categories.length; i++)
@@ -168,7 +185,7 @@
 					this.categories[i].visible = (this.categories[i].name == val);
 				}
 
-				this.checkedKeywords = [];
+				this.selectedKeywords = [];
 			}
 		},
 		methods:
@@ -176,25 +193,30 @@
 			validate()
 			{
 				this.isValidating = true;
+				this.isValid = false;
+				this.databaseCheckPassed = false;
+				this.articleCheckPassed = false;
 
+				// Clean up previous results
 				while(this.validationMessages.length > 0)
 				{
 					this.validationMessages.pop();
 				}
-				// $('#article1').empty();
+				this.article = null;
 
 				// Verify if article not present in DB
-				axios.get("src/verifyarticle.php", { params: {author: this.author, permlink: this.permlink}}).then(
+				axios.post("api/v1/verifyarticle.php", "author=" + this.author + "&permlink=" + this.permlink).then(
 					(response) =>
 					{
-						if(response.request.responseType === 'success')
+						let result = JSON.parse(response.request.response);
+						if(result.type == 'success')
 						{
 							this.validationMessages.push({text: 'New article, not present in the database.', classes: 'text-success'});
 							this.databaseCheckPassed = true;
 						}
 						else
 						{
-							this.validationMessages.push({text: response.request.responseText, classes: 'text-danger'});
+							this.validationMessages.push({text: result.message, classes: 'text-danger'});
 						}
 						this.databaseCheckCompleted = true;
 						this.validationComplete();
@@ -252,21 +274,71 @@
 			{
 				if (this.databaseCheckCompleted && this.articleCheckCompleted)
 				{
+					if(this.articleCheckPassed && this.databaseCheckPassed)
+					{
+						this.isValid = true;
+					}
 					this.isValidating = false;
 				}
 			},
 			submit()
 			{
-				var auth = 'Basic ' + new Buffer('username' + ':' + 'password').toString('base64');
-				axios.defaults.headers.common['Authorization'] = auth;
+				this.isSubmitting = true;
 
-				axios({url: 'src/submitpost.php', data: 'testdata', method: 'POST' })
-            .then(resp => {
-                debugger;
-            })
-            .catch(err => {
-                debugger;
-            })
+				// Clean up previous messages
+				while(this.submissionMessages.length > 0)
+				{
+					this.submissionMessages.pop();
+				}
+
+				if(this.selectedKeywords.length === 0)
+				{
+					this.submissionMessages.push({text: 'Select at least one keyword.', classes: 'text-danger'});
+					return false;
+				}
+
+				axios.post("api/v1/submitpost.php", "author=" + this.author + "&permlink=" + this.permlink + "&category=" + this.selectedCategory + "&keywords=" + this.selectedKeywords).then(
+					(response) =>
+					{
+						this.isSubmitting = false;
+						this.submissionMessages.push({text: 'Article successfully committed.', classes: 'text-danger'});
+						this.isFormDisabled = true;
+					}, (error) =>
+					{
+						this.isSubmitting = false;
+						if (error.responseText !== '')
+						{
+							this.submissionMessages.push({text: 'An error occured while submitting to the database: ' + error.responseText, classes: 'text-danger'});
+						}
+						else
+						{
+							this.submissionMessages.push({text: 'Oops! An error occured and your entry was not added.', classes: 'text-danger'});
+						}
+					});
+
+				return true;
+			},
+			submitAnother()
+			{
+				this.link = '';
+				this.linkClasses = '';
+				this.author = '';
+				this.authorClasses = '';
+				this.permlink = '';
+				this.permlinkClasses = '';
+				this.validationMessages = [];
+				this.submissionMessages = [];
+				this.selectedKeywords = [];
+				this.article = null;
+				this.isFormDisabled = false;
+			},
+			OnInformationChanged()
+			{
+				this.isValid = false;
+				this.validationMessages = [];
+				this.authorClasses = '';
+				this.permlinkClasses = '';
+				this.article = null;
 			}
 		}
 	});
