@@ -1,6 +1,6 @@
 <?php
-	require_once('utils.php');
-	require_once('database.php');
+	require_once('../../src/utils.php');
+	require_once('../../src/database.php');
 	$database = new Database();
 
 	$responseArray = array('type' => 'danger', 'message' => 'An error occured');
@@ -11,8 +11,12 @@
 		{
 			try
 			{
-				$query = "SELECT * FROM approved_posts INNER JOIN users ON approved_posts.author_id=users.id WHERE name = '".$_POST['author']."' AND permlink = '".$_POST['permlink']."'";
-				$queryResult = $database->select($query);
+				$queryStatement = "SELECT * FROM approved_posts INNER JOIN users ON approved_posts.author_id=users.id WHERE name = :author AND permlink = :permlink";
+				$queryInputParameters = array(
+					'author' => $_POST['author'],
+					'permlink' => $_POST['permlink']
+				);
+				$queryResult = $database->select($queryStatement, $queryInputParameters);
 
 				if(count($queryResult) === 0)
 				{
@@ -32,23 +36,13 @@
 		{
 			$responseArray = array('type' => 'danger', 'message' => 'Input not valid to verify database');
 		}
-
-		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
-		{
-			$encoded = json_encode($responseArray);
-
-			header('Content-Type: application/json');
-
-			echo $encoded;
-		}
-		else
-		{
-			echo $responseArray['message'];
-		}
 	}
 	else
 	{
 		$responseArray = array('type' => 'danger', 'message' => 'User not authorized.');
-		echo $responseArray['message'];
 	};
+
+	$encoded = json_encode($responseArray);
+	header('Content-Type: application/json');
+	echo $encoded;
 ?>

@@ -1,7 +1,7 @@
 <?php 
 
 require_once('../../src/database.php'); 
-require_once('paginator.php'); 
+require_once('../../src/paginator.php'); 
 
 
 $request_method=$_SERVER["REQUEST_METHOD"];
