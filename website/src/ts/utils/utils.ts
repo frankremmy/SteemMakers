@@ -65,7 +65,7 @@ export function formatDate(date: Date) :string
 {
 	var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
-	var day = date.getDay();
+	var day = date.getDate();
 	var monthIndex = date.getMonth();
 	var year = date.getFullYear();
 

@@ -19,7 +19,7 @@ function createPlugins()
 		plugins.push(
 			new webpack.DefinePlugin(
 			{
-				SC_CALLBACK_URL: '"https://www.steemmakers.com/test/#/authentication"'
+				SC_CALLBACK_URL: '"https://www.steemmakers.com/test.php#/authentication"'
 			})
 		);
 	}
@@ -37,7 +37,7 @@ function createPlugins()
 }
 
 module.exports = {
-	mode: 'development',
+	mode: process.env.NODE_ENV,
 	entry: './src/ts/main.ts',
 	output:
 	{
@@ -108,26 +108,24 @@ module.exports = {
 	devtool: 'source-map'
 }
 
-console.log(process.env.NODE_ENV);
-
-if (process.env.NODE_ENV === 'production')
-{
-	module.exports.devtool = 'source-map'
-	// http://vue-loader.vuejs.org/en/workflow/production.html
-	module.exports.plugins = (module.exports.plugins || []).concat([
-		new webpack.DefinePlugin({
-			'process.env': {
-			NODE_ENV: '"production"'
-			}
-		}),
-		new webpack.optimize.UglifyJsPlugin({
-			sourceMap: true,
-			compress: {
-			warnings: false
-			}
-		}),
-		new webpack.LoaderOptionsPlugin({
-			minimize: true
-		})
-	])
-}
+// if (process.env.NODE_ENV === 'production')
+// {
+// 	module.exports.devtool = 'source-map'
+// 	// http://vue-loader.vuejs.org/en/workflow/production.html
+// 	module.exports.plugins = (module.exports.plugins || []).concat([
+// 		new webpack.DefinePlugin({
+// 			'process.env': {
+// 			NODE_ENV: '"production"'
+// 			}
+// 		}),
+// 		// new webpack.optimize.UglifyJsPlugin({
+// 		// 	sourceMap: true,
+// 		// 	compress: {
+// 		// 	warnings: false
+// 		// 	}
+// 		// }),
+// 		new webpack.LoaderOptionsPlugin({
+// 			minimize: true
+// 		})
+// 	])
+// }
