@@ -10,18 +10,18 @@
 
 		<b-collapse is-nav id="nav_collapse">
 			<b-navbar-nav class="ml-auto navbar-items-bottom">
-				<b-nav-item to="Blog">Blog</b-nav-item>
+				<b-nav-item to="/Blog">Blog</b-nav-item>
 				<b-nav-item-dropdown text="Info" right>
-					<b-dropdown-item to="about">About</b-dropdown-item>
-					<b-dropdown-item to="faq">FAQ</b-dropdown-item>
-					<b-dropdown-item to="delegation">Delegate to us</b-dropdown-item>
-					<b-dropdown-item to="trail">Follow our trail</b-dropdown-item>
-					<b-dropdown-item to="notices">Notices</b-dropdown-item>
+					<b-dropdown-item to="/About">About</b-dropdown-item>
+					<b-dropdown-item to="/Aaq">FAQ</b-dropdown-item>
+					<b-dropdown-item to="/Delegation">Delegate to us</b-dropdown-item>
+					<b-dropdown-item to="/Trail">Follow our trail</b-dropdown-item>
+					<b-dropdown-item to="/Notices">Notices</b-dropdown-item>
 				</b-nav-item-dropdown>
-				<b-nav-item to="Contact">Contact</b-nav-item>
+				<b-nav-item to="/Contact">Contact</b-nav-item>
 				<b-nav-item v-if="!isLoggedIn" @click='login()'>Login</b-nav-item>
 				<b-nav-item-dropdown v-if="isLoggedIn" :text="username" right >
-					<b-dropdown-item v-if="isReviewer" to="SubmitPost">Submit post</b-dropdown-item>
+					<b-dropdown-item v-if="isReviewer" to="/SubmitPost">Submit post</b-dropdown-item>
 					<b-dropdown-item @click='logout()'>Logout</b-dropdown-item>
 				</b-nav-item-dropdown>
 				<b-nav-item v-if="isLoggedIn" class="nav-item d-none d-md-block"><img :src="profileImage" height="40" width="40" style="margin-right: 10px; border-radius: 5px;"></b-nav-item>
