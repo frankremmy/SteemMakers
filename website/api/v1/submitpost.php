@@ -15,7 +15,6 @@
 		{
 			try
 			{
-				//$query = "CALL steemmak_steemmakers.AddApprovedPost('".$_POST['author']."', '".$_POST['permlink']."', '".$_POST['category']."', '".GetUsername()."', '".GetUsername()."', '".implode(",", $_POST['keywords'])."')";
 				$queryStatement = "CALL steemmak_steemmakers.AddApprovedPost(:author, :permlink, :category, :discoverer, :user, :keywords)";
 				$queryInputParameters = array(
 					'author' => $_POST['author'],

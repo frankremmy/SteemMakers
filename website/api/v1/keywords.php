@@ -26,9 +26,9 @@ function get_keywords()
 	$database = new Database();
 
 	$query = "SELECT k.name as keyword, c.name as category
-	FROM keywords k
-	JOIN keywords_categories kc ON kc.keywords_id = k.id
-	JOIN categories c ON kc.categories_id = c.id";
+		FROM keywords k
+		JOIN keywords_categories kc ON kc.keywords_id = k.id
+		JOIN categories c ON kc.categories_id = c.id";
 	 
 	$queryResult = $database->select( $query, []);
 

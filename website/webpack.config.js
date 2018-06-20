@@ -19,7 +19,7 @@ function createPlugins()
 		plugins.push(
 			new webpack.DefinePlugin(
 			{
-				SC_CALLBACK_URL: '"https://www.steemmakers.com/test.php#/authentication"'
+				SC_CALLBACK_URL: '"https://www.steemmakers.com/#/authentication"'
 			})
 		);
 	}

@@ -26,17 +26,43 @@
 		<link href='http://fonts.googleapis.com/css?family=Roboto:400,400i,500,700|Lato:400,400i,700,700i,900|Righteous' media='all' rel='stylesheet' type='text/css'/>
 		<link href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' rel='stylesheet'/>
 
-		<!-- investigate async and defer for loading js-->
-		<script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.0/src/js.cookie.min.js"></script>
-		<script type="text/javascript" src="js/config.js"></script>
+		<style>
+		html, body
+		{
+			height: 100%;
+			font-family: 'Lato', sans-serif; 
+		}
 
-		<script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
-		<script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
+		.flex-container
+		{
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			display: -webkit-box;
+			display: -moz-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.row
+		{
+			width: auto;
+		}
+		</style>
 	</head>
 	
-	<body>
-		<app></app>
+	<body style="background: #278AB6">
+			<div class="flex-container">
+				<div class="row">
+					<center>
+						<img src="img/navbar-logo.png">
+						<h1 style="font-weight: 400;">Sorry, we're down for maintenance.</h1>
+						<h3 style="font-weight: 100;">We'll be back soon.</h3>
+					</center>
+				</div>
+			</div>
 	</body>
-	
-	<script src="./dist/build.js?filever=<?php echo filesize('./dist/build.js')?>"></script>
 </html>
