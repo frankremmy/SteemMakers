@@ -19,7 +19,7 @@ export default new Router({
 	routes: [
 		{
 			path: '',
-			name: 'Home',
+			name: 'Landing',
 			component: Home,
 			props: true,
 		},
