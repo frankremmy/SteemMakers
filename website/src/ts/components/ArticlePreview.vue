@@ -12,7 +12,7 @@
 					<div class="multiline-ellipsis">
 						<p>{{blogEntry.previewBody}}</p>
 					</div>
-					<span class="metadata"><i>by <a :href="AuthorBlogLink">{{blogEntry.author}}</a> on {{blogEntry.created | formatDate}}</i></span>
+					<p class="metadata"><i>by <a :href="AuthorBlogLink">{{blogEntry.author}}</a> on {{blogEntry.created | formatDate}}</i><span style="float:right;">${{blogEntry.payout}}</span></p>
 				</div>
 			</template>
 			<template v-else>
@@ -75,6 +75,7 @@
 {
 	margin-top: 10px;
 	display: block;
+	text-align: left;
 }
 
 .blog-image

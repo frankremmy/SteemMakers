@@ -12,6 +12,7 @@ export class BlogEntry
 	previewImage: string | null = null;
 	title: string = '';
 	url: string = '';
+	payout: number = 0;
 
 	constructor(post: steem.Post)
 	{
@@ -28,5 +29,16 @@ export class BlogEntry
 		this.title = post.title;
 		this.url = post.url;
 		this.isLoading = false;
+
+		// Calculate payout
+		this.payout = parseFloat(post.pending_payout_value) + parseFloat(post.total_payout_value) + parseFloat(post.curator_payout_value);
+		if (this.payout < 0.0) this.payout = 0.0;
+		let maxPayout = parseFloat(post.max_accepted_payout);
+		if (this.payout > maxPayout) this.payout = maxPayout;
+	}
+
+	private parsePayoutAmount(amount :string)
+	{
+		return parseFloat(String(amount).replace(/\s[A-Z]*$/, ''));
 	}
 }

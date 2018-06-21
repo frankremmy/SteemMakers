@@ -6,9 +6,11 @@
 					<h1>{{Title}}</h1>
 				</div>
 				<div class="post-meta">
-					<span><i>by <a :href="AuthorBlogLink">{{Author}}</a> on {{CreationDateTime}}</i></span>
+					<p><i>by <a :href="AuthorBlogLink">{{Author}}</a> on {{CreationDateTime}}</i>
 					<a :href="SteemitArticleLink" target="_blank" style="float: right;"><img class="media-button" src="img/steemit.png"></a>
 					<a :href="BusyArticleLink" target="_blank" style="float: right;"><img class="media-button" src="img/busy.png"></a>
+					<span style="float:right;">${{Payout}}</span>
+					</p>
 				</div>
 				<div v-highlightjs v-html="BodyHTML"></div>
 			</div>
@@ -43,6 +45,7 @@
 				CreationDateTime: '',
 				BodyHTML: '<p>Loading...<p>',
 				Title: '',
+				Payout: 0
 			}
 		},
 		directives:
@@ -89,6 +92,7 @@
 					this.Author = blogEntry.author;
 					this.BodyHTML = blogEntry.body;
 					this.Title = blogEntry.title;
+					this.Payout = blogEntry.payout;
 					
 					var options = {year: "numeric", month: "long", day: "numeric", hour: '2-digit', minute:'2-digit', hour12: false};
 					this.CreationDateTime = formatDate(blogEntry.created);
