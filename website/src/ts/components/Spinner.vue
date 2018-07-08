@@ -32,9 +32,9 @@
 	});
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 	.spinner {
-	position: relative;
+		position: relative;
 	* {
 		line-height: 0;
 		box-sizing: border-box;

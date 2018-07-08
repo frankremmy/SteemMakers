@@ -13,6 +13,7 @@
 				</ul>
 
 				<h4 class="my-4">Curation trail</h4>
+				<TrailList></TrailList>
 				<p>In the steem ecosystem a curation trail is a common concept.  Not everybody has the same amount of time or level of engagement to put their available steem power to good use. That doesn't necessarily mean they don't believe in the platform and don't want it to succeed. Services exist that offer the possibility to automatically vote similarly to the trail you follow. There are several options to set the voting percentage but basically it means you can automatically vote for the same blog posts the SteemMakers community account votes for.</p>
 
 				<p>This creates a win-win situation. The content-creators get more votes meaning more visibility and rewards. The investors will still be actively voting and keep the ecosystem of Steem and SteemDollar flowing while at the same time receiving curation rewards they would otherwise not get. You could even say its a win-win-win with the last one being the Steem platform and its future.</p>
@@ -68,9 +69,9 @@
 
 <script lang="ts">
 	import Vue from "vue";
-	
+	import TrailList from './TrailList.vue';
 	export default Vue.extend({
-
+		components: { TrailList }
 	});
 </script>
 
