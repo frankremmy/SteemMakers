@@ -1,55 +1,68 @@
 <template>
-  <div>
-    <div v-if="sortedTrailers === null" >
-        <pre>Could not load data from steemauto</pre>
-    </div>
-    <div v-else>
-      <table id="result" width="400px">
-        <tr><td>Steem ID</td><td>&nbsp;&nbsp;&nbsp;</td><td>Weight</td><td>&nbsp;&nbsp;&nbsp;</td><td>Estimated Vote Value</td></tr>
-        <tr v-for="trailer in sortedTrailers"><td><a :href="trailer.authorlink">{{ trailer.follower }}</a></td><td>&nbsp;&nbsp;&nbsp;</td><td>{{ trailer.weight }}</td><td>&nbsp;&nbsp;&nbsp;</td><td>{{ trailer.value }} SBD</td></tr>
-      </table>
-    </div>
-  </div>
+	<div>
+		<center>
+			<div v-if="trailers.length === 0" >
+				<pre>Fetching data from steemauto</pre>
+			</div>
+			<div v-else>
+				<table id="result" width="400px">
+				<tr><td>Steem ID</td><td>&nbsp;&nbsp;&nbsp;</td><td>Weight</td><td>&nbsp;&nbsp;&nbsp;</td><td>Estimated Vote Value</td></tr>
+				<tr v-for="(trailer, index) in trailers"  :key="index"><td><a :href="trailer.profileLink">{{ trailer.name }}</a></td><td>&nbsp;&nbsp;&nbsp;</td><td>{{ trailer.voteWeight | ToFixed(2)}}</td><td>&nbsp;&nbsp;&nbsp;</td><td>{{ trailer.voteValue | ToFixed(2)}} SBD</td></tr>
+				</table>
+			</div>
+		</center>
+	</div>
 </template>
 
 <script lang="ts">
-  import axios from 'axios';
-  import Vue from "vue";
-  import {getVoteValue} from "../utils/utils";
+	import axios from 'axios';
+	import Vue from "vue";
+	import {convertTrailers} from "../utils/utils";
+	import {SteemAutoTrailer, Trailer} from "../Trailer";
 
-  export default Vue.extend({
-    data() {
-      return {
-        sortedTrailers: [{},{}],
-        trailers: [],
-        accounts: []
-      }
-    },
-    created: async function() {
-      var accounts:Array<string> = [];
-      let weights:Array<string> = [];
-      var name:string;
+	export default Vue.extend({
+		data()
+		{
+			return {
+				trailers: <Trailer[]>[],
+				accounts: []
+			}
+		},
+		created: async function()
+		{
+			var accounts:Array<string> = [];
+			let weights:Array<number> = [];
+			var name:string;
 
-      await axios.get(`https://steemauto.com/api.php?i=1&user=steemmakers`)
-        .then(response => {
-        // JSON responses are automatically parsed.
-        this.trailers = response.data
-      });
+			let steemAutoTrailers: SteemAutoTrailer[] = [];
 
-      this.trailers.forEach(function(element) {
-        name = element['follower'];
-        element['weight'] = element['weight'] / 100;
-        accounts.push(name);
-        weights.push(element['weight']);
-      });
-      this.sortedTrailers = await getVoteValue(accounts, weights);
+			await axios.get(`https://steemauto.com/api.php?i=1&user=steemmakers`)
+			.then(response => {
+				steemAutoTrailers = JSON.parse(response.request.response);
+			});
 
-      // add author link
-      this.sortedTrailers.forEach(function(element) {
-        element['authorlink'] = 'https://www.steemit.com/@' + element['follower'];
-      });
-    }
-  });
+			if(steemAutoTrailers.length !== 0)
+			{
+				this.trailers = await convertTrailers(steemAutoTrailers);
+
+				this.trailers.sort(function(a, b) {
+					if (b.voteValue < a.voteValue)
+						return -1;
+					else if (b.voteValue > a.voteValue)
+						return 1;
+					else
+						return 0;
+				});
+			}
+		},
+		filters:
+		{
+			ToFixed: function (input: number, nofDigits: number)
+			{
+				return input.toFixed(nofDigits);
+			}
+		}
+	});
 </script>
 
 

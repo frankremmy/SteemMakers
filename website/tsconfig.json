@@ -1,15 +1,14 @@
 {
-    "compilerOptions": {
-        "target": "es2015",
-        "module": "es2015",
-        "sourceMap": true,
-        "strict": true,
-        "outDir": "./dist/",
-        "noImplicitReturns": true,
-        "moduleResolution": "node",
-        "noImplicitAny": false,
-    },
-    "include": [
-        "./src/**/*"
-    ]
+	"compilerOptions": {
+		"target": "es2015",
+		"module": "es2015",
+		"sourceMap": true,
+		"strict": true,
+		"outDir": "./dist/",
+		"noImplicitReturns": true,
+		"moduleResolution": "node",
+	},
+	"include": [
+		"./src/**/*"
+	]
 }

@@ -1,4 +1,5 @@
 import {BlogEntry} from '../blogentry';
+import {SteemAutoTrailer, Trailer} from '../Trailer'
 
 steem.api.setOptions({ url: 'https://api.steemit.com' });
 
@@ -72,16 +73,17 @@ export function formatDate(date: Date) :string
 	return day + ' ' + monthNames[monthIndex] + ' ' + year + ', ' + date.getHours() + ':' + date.getMinutes();
 }
 
-export async function getVoteValue (authors: Array<string>, weights: Array<string>): Promise<Array<any>>
+export async function convertTrailers (steemAutoTrailers: Array<SteemAutoTrailer>): Promise<Trailer[]>
 {
 	// this will be the result array
-	var result:Array<any> = [];
+	let result:Array<Trailer> = [];
+	let authors: string[] = [];
 
 	// here get all the blockchain data
-	var globalData:any;
-	var data: any;
-	var sbd_base: any;
-	var accounts: any;
+	let globalData:any;
+	let data: any;
+	let sbd_base: any;
+	let accounts: any;
 
 	// async calls to steem apis
 	let globalDataPromise = new Promise((resolve, reject) => {
@@ -103,6 +105,10 @@ export async function getVoteValue (authors: Array<string>, weights: Array<strin
 			if (err) reject(err);
 			resolve(result);
 		});
+	});
+
+	steemAutoTrailers.forEach(function(trailer) {
+		authors.push(trailer.follower);
 	});
 
 	let accountsPromise = new Promise((resolve, reject) => {
@@ -128,11 +134,14 @@ export async function getVoteValue (authors: Array<string>, weights: Array<strin
 	globalData.total_vesting_shares.replace(' VESTS', '');
 
 	// main loop across all accounts
-	for(var i=0;i < accounts.length; i++ ){
+	for(var i=0;i < accounts.length; i++ )
+	{
+		let trailer: Trailer = new Trailer;
+		trailer.name = steemAutoTrailers[i].follower;
+		trailer.voteWeight = steemAutoTrailers[i].weight / 100;
+		trailer.profileLink = 'https://www.steemit.com/@' + steemAutoTrailers[i].follower;
+		
 		// calculate 100% votes
-		result[i] = {};
-		result[i].follower = authors[i];
-		result[i].weight = weights[i];
 
 		var vestingSharesParts = accounts[i].vesting_shares.split(' ');
 		var receivedSharesParts = accounts[i].received_vesting_shares.split(' ');
@@ -143,19 +152,21 @@ export async function getVoteValue (authors: Array<string>, weights: Array<strin
 			parseFloat(receivedSharesParts)
 		) - (parseFloat(delegatedSharesParts));
 
-		// maybe show the vests in result
-		result[i].vests = vests;
-
 		var	sp = steem.formatter.vestToSteem(
 			vests,
 			parseFloat(globalData.total_vesting_shares),
 			parseFloat(globalData.total_vesting_fund_steem)
 		);
 
-		// maybe show vp in result
-		result[i].sp = sp;
+		let now = new Date();
+		let lastVoteTime = new Date(accounts[i].last_vote_time + "Z");
+		var secondsago = (now.valueOf() - lastVoteTime.valueOf()) / 1000;
 
-		var vp = Math.trunc( parseInt(weights[i])) / 100;
+		// 5 days required to get to 100% VP: 60*60*24*5 = 432000
+		var vpow = accounts[i].voting_power + (10000 * secondsago / 432000);
+		vpow = Math.min(vpow , 10000);
+
+		var vp = vpow / 100;
 		var m  = Math.trunc(100 * vp * (100 * 100) / 10000);
 
 		m = Math.trunc((m + 49) / 50);
@@ -165,22 +176,13 @@ export async function getVoteValue (authors: Array<string>, weights: Array<strin
 		var vote = Math.trunc(r * m * 100) * ii * o;
 
 		// weight the 100% vote with the weight from input
-		vote = vote * (parseFloat(weights[i])/100);
-		vote = vote * 100;
+		vote = vote * (steemAutoTrailers[i].weight/100);
+		// vote = vote * 100;
 
-		// show vote value in result
-		result[i].valueunfixed = vote; // this is for sorting
-		result[i].value = vote.toFixed(2);
+		trailer.voteValue = vote / 100; 
+
+		result.push(trailer);
 	}
 
-	result.sort(function(a, b) {
-		if (b.valueunfixed < a.valueunfixed)
-			return -1;
-		else if (b.valueunfixed > a.valueunfixed)
-			return 1;
-		else
-			return 0;
-		});
 	return result;
-
 }
