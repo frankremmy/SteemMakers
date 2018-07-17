@@ -13,7 +13,7 @@
 				<b-nav-item to="/Blog">Blog</b-nav-item>
 				<b-nav-item-dropdown text="Info" right>
 					<b-dropdown-item to="/About">About</b-dropdown-item>
-					<b-dropdown-item to="/Aaq">FAQ</b-dropdown-item>
+					<b-dropdown-item to="/Faq">FAQ</b-dropdown-item>
 					<b-dropdown-item to="/Delegation">Delegate to us</b-dropdown-item>
 					<b-dropdown-item to="/Trail">Follow our trail</b-dropdown-item>
 					<b-dropdown-item to="/Notices">Notices</b-dropdown-item>
