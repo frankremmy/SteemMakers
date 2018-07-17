@@ -36,7 +36,33 @@
 
 			let steemAutoTrailers: SteemAutoTrailer[] = [];
 
-			await axios.get(`https://steemauto.com/api.php?i=1&user=steemmakers`)
+// debugger;
+
+// 	var proxyUrl = 'https://cryptic-headland-94862.herokuapp.com/',
+// 	targetUrl = 'https://steemauto.com/api.php?i=1&user=steemmakers'
+	
+// 	await fetch(proxyUrl + targetUrl)
+//   .then(function(response) { 
+// 		debugger;
+// 		//console.log('response' + response);
+// 		//console.log('response' + response.json());
+// 	// Convert to JSON
+// 	return response.json();
+// 	}) .then(function(j) {
+// 	// Yay, `j` is a JavaScript object
+// 	debugger;
+// 	steemAutoTrailers = j; 
+//   })
+//   .catch(e => {
+//     console.log(e);
+//     return e;
+//   });
+
+// debugger;
+
+			// https://stackoverflow.com/a/43268098/4169986
+
+			await axios.get(`https://cryptic-headland-94862.herokuapp.com/https://steemauto.com/api.php?i=1&user=steemmakers`)
 			.then(response => {
 				steemAutoTrailers = JSON.parse(response.request.response);
 			});
