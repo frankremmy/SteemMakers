@@ -9,7 +9,7 @@
 					<p><i>by <a :href="AuthorBlogLink">{{Author}}</a> on {{CreationDateTime}}</i>
 					<a :href="SteemitArticleLink" target="_blank" style="float: right;"><img class="media-button" src="img/steemit.png"></a>
 					<a :href="BusyArticleLink" target="_blank" style="float: right;"><img class="media-button" src="img/busy.png"></a>
-					<span style="float:right;">${{Payout}}</span>
+					<span style="float:right;">${{Payout | limitDecimals}}</span>
 					</p>
 				</div>
 				<div v-highlightjs v-html="BodyHTML"></div>
@@ -61,6 +61,13 @@
 						hljs.highlightBlock(targets[i]);
 					}
 				}
+			}
+		},
+		filters:
+		{
+			limitDecimals: function (value :number)
+			{
+				return value.toFixed(2);
 			}
 		},
 		computed:

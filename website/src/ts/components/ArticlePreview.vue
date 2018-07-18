@@ -12,7 +12,7 @@
 					<div class="multiline-ellipsis">
 						<p>{{blogEntry.previewBody}}</p>
 					</div>
-					<p class="metadata"><i>by <a :href="AuthorBlogLink">{{blogEntry.author}}</a> on {{blogEntry.created | formatDate}}</i><span style="float:right;">${{blogEntry.payout}}</span></p>
+					<p class="metadata"><i>by <a :href="AuthorBlogLink">{{blogEntry.author}}</a> on {{blogEntry.created | formatDate}}</i><span style="float:right;">${{blogEntry.payout | limitDecimals}}</span></p>
 				</div>
 			</template>
 			<template v-else>
@@ -46,6 +46,10 @@
 			formatDate: function (date: Date)
 			{
 				return formatDate(date);
+			},
+			limitDecimals: function (value :number)
+			{
+				return value.toFixed(2);
 			}
 		}
 	});
