@@ -38,10 +38,10 @@
 	display: block;
 	display: -webkit-box;
 	max-width: 100%;
-	height: 61px;
+	height: 49px;
 	line-height: 1.2;
 	margin: 0 auto;
-	font-size: 25px;
+	font-size: 20px;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
@@ -63,4 +63,62 @@ body
 .footer-list
 {
 	list-style-image: url('list-arrow.png');
+}
+
+.footer-sitemap
+{
+	border-left: 0px solid;
+}
+
+/* Extra small devices (portrait phones, less than 576px)
+   No media query for `xs` since this is the default in Bootstrap */
+
+.sidebar-title
+{
+	font-size: 1rem;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px)
+{
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px)
+{
+	.footer-sitemap
+	{
+		border-left: 1px solid;
+	}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px)
+{
+	.article-preview-title-ellipsis
+	{
+		display: block;
+		display: -webkit-box;
+		max-width: 100%;
+		height: 61px;
+		line-height: 1.2;
+		margin: 0 auto;
+		font-size: 25px;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.sidebar-title
+	{
+		font-size: 1.5rem;
+	}
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px)
+{
+
 }

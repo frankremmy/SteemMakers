@@ -2,6 +2,16 @@
 <html>
 
 <head>
+  <link href="https://fonts.googleapis.com/css?family=Rajdhani:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', serif;
+    }
+  </style>
+</head>
+
+<body class="m-0 p-0">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="bootstrap.build.css">
@@ -12,13 +22,17 @@
       min-height: 100vh;
     }
   </style>
-</head>
-
-<body class="m-0 p-0">
   <wrapper class="d-flex flex-column bg-secondary">
     <nav class="navbar navbar-expand-md bg-primary navbar-dark">
       <div class="container">
-        <img class="img-fluid d-block" src="navbar-logo.png">
+        <a class="navbar-brand d-block d-md-none" href="#" style="display: block; font-family: 'Rajdhani', sans-serif; font-weight:700; font-size:28px; color:white">
+          <img src="steemmakers_icon_white.svg" height="40px">
+          <span style="position: relative; top: 4px;">SteemMakers</span>
+        </a>
+        <a class="navbar-brand d-none d-md-block" href="#" style="display: block; font-family: 'Rajdhani', sans-serif; font-weight:700; font-size:40px; color:white">
+          <img src="steemmakers_icon_white.svg" height="56px">
+          <span style="position: relative; top: 4px;">SteemMakers</span>
+        </a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -75,7 +89,7 @@
                     ultricies ac enim quis tempor. Vivamus magna massa, pretium nec dolor ut, feugiat aliquet eros. Phasellus ut porttitor odio.</p>
                 </div>
               </div>
-              <div class="row">
+              <div class="row d-none d-md-block">
                 <div class="col-md-12 d-flex pr-4 py-2">
                   <div style="float:left, flex:1">
                     <img class="img-fluid d-block float-left d-inline-flex pl-2" src="upvote.png">
@@ -88,6 +102,20 @@
                   <div style="margin-left:auto">
                     <span class="px-1"> Posted on June 28 2018 </span>
                   </div>
+                </div>
+              </div>
+              <div class="row d-block d-md-none">
+                <div class="col-md-12 d-flex pr-4 py-2">
+                  <div>
+                    <span class="pl-2"> Posted on June 28 2018 </span>
+                    <br>
+                    <img class="img-fluid d-block float-left d-inline-flex pl-2" src="upvote.png">
+                    <span class="border-right border-primary pr-2 d-inline-flex" contenteditable="true">$12.34</span>
+                    <img class="img-fluid d-block d-inline-flex" src="upvotes.png">
+                    <span class="pr-2 d-inline-flex">51</span>
+                    <img class="img-fluid d-block d-inline-flex" src="Comments.png">
+                    <span class="pr-2 d-inline-flex">12</span>
+                    <img class="img-fluid d-block d-inline-flex" src="resteem.png"> </div>
                 </div>
               </div>
             </div>
@@ -123,7 +151,7 @@
                     ultricies ac enim quis tempor. Vivamus magna massa, pretium nec dolor ut, feugiat aliquet eros. Phasellus ut porttitor odio.</p>
                 </div>
               </div>
-              <div class="row">
+              <div class="row d-none d-md-block">
                 <div class="col-md-12 d-flex pr-4 py-2">
                   <div style="float:left, flex:1">
                     <img class="img-fluid d-block float-left d-inline-flex pl-2" src="upvote.png">
@@ -138,50 +166,88 @@
                   </div>
                 </div>
               </div>
+              <div class="row d-block d-md-none">
+                <div class="col-md-12 d-flex pr-4 py-2">
+                  <div>
+                    <span class="pl-2"> Posted on June 28 2018 </span>
+                    <br>
+                    <img class="img-fluid d-block float-left d-inline-flex pl-2" src="upvote.png">
+                    <span class="border-right border-primary pr-2 d-inline-flex" contenteditable="true">$12.34</span>
+                    <img class="img-fluid d-block d-inline-flex" src="upvotes.png">
+                    <span class="pr-2 d-inline-flex">51</span>
+                    <img class="img-fluid d-block d-inline-flex" src="Comments.png">
+                    <span class="pr-2 d-inline-flex">12</span>
+                    <img class="img-fluid d-block d-inline-flex" src="resteem.png"> </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-2 bg-secondary p-3">
+        <div class="col-md-2 bg-secondary d-none d-md-block p-0 pt-3">
           <div class="row">
             <div class="col-md-12">
-              <h3 class="bg-primary text-secondary p-1 rounded" style="box-shadow: 0px 5px 8px #888888;">Top upvoters</h3>
-              <p style="text-align:left; line-height: 1.2em;" class="m-0">
-                <a href="#">@jefpatat</a>
-                <span style="float:right;">$1.23</span>
-              </p>
-              <p style="text-align:left; line-height: 1.2em;" class="m-0">
-                <a href="#">@drmake</a>
-                <span style="float:right;">$1.22</span>
-              </p>
-              <p style="text-align:left; line-height: 1.2em;" class="m-0">
-                <a href="#">@podan</a>
-                <span style="float:right;">$1.21</span>
-              </p>
-              <p style="text-align:left; line-height: 1.2em;">
-                <a href="#">@pbock</a>
-                <span style="float:right;">$1.20</span>
-              </p>
+              <div class="bg-primary text-secondary p-1 rounded sidebar" style="box-shadow: 0px 5px 8px #888888;">
+                <span>Top upvoters</span>
+              </div>
+              <div class="container mt-2">
+                <div class="row">
+                  <div class="col p-0">
+                    <a href="#">@jefpatat</a>
+                  </div>
+                  <div class="col p-0 d-flex justify-content-end"> $0.23 </div>
+                </div>
+                <div class="row">
+                  <div class="col p-0">
+                    <a href="#">@drmake</a>
+                  </div>
+                  <div class="col p-0 d-flex justify-content-end"> $1.23 </div>
+                </div>
+                <div class="row">
+                  <div class="col p-0">
+                    <a href="#">@verylongusername</a>
+                  </div>
+                  <div class="col p-0 d-flex justify-content-end"> $2.23 </div>
+                </div>
+                <div class="row">
+                  <div class="col p-0">
+                    <a href="#">@makerhacks</a>
+                  </div>
+                  <div class="col p-0 d-flex justify-content-end"> $3.23 </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row pt-3">
             <div class="col-md-12">
-              <h3 class="bg-primary text-secondary p-1 rounded" style="box-shadow: 0px 5px 8px #888888;">Top contributors</h3>
-              <p style="text-align:left; line-height: 1.2em;" class="m-0">
-                <a href="#">@makerhacks</a>
-                <span style="float:right;">20</span>
-              </p>
-              <p style="text-align:left; line-height: 1.2em;" class="m-0">
-                <a href="#">@robali123</a>
-                <span style="float:right;">10</span>
-              </p>
-              <p style="text-align:left; line-height: 1.2em;" class="m-0">
-                <a href="#">@electronicsworld</a>
-                <span style="float:right;">8</span>
-              </p>
-              <p style="text-align:left; line-height: 1.2em;">
-                <a href="#">@techtek</a>
-                <span style="float:right;">7</span>
-              </p>
+              <div class="bg-primary text-secondary p-1 rounded sidebar" style="box-shadow: 0px 5px 8px #888888;">
+                <span>Top contributors</span>
+              </div>
+              <div class="container mt-2">
+                <div class="row">
+                  <div class="col p-0">
+                    <a href="#">@makerhacks</a>
+                  </div>
+                  <div class="col p-0 d-flex justify-content-end"> 20 </div>
+                </div>
+                <div class="row">
+                  <div class="col p-0">
+                    <a href="#">@techtek</a>
+                  </div>
+                  <div class="col p-0 d-flex justify-content-end"> 10 </div>
+                </div>
+                <div class="row">
+                  <div class="col p-0">
+                    <a href="#">@electronicsworld</a>
+                  </div>
+                  <div class="col p-0 d-flex justify-content-end"> 5 </div>
+                </div>
+                <div class="row">
+                  <div class="col p-0">
+                    <a href="#">@podanrj</a>
+                  </div>
+                  <div class="col p-0 d-flex justify-content-end"> 2 </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -204,7 +270,7 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="col-12 container mt-3 border-left border-secondary">
+            <div class="col-12 container mt-3 border-secondary footer-sitemap">
               <div class="row">
                 <div class="col-md-12">
                   <h6 class="text-white">SteemMakers</h6>
