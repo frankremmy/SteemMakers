@@ -6,11 +6,18 @@ In the steem blockchain, not everybody has the same amount of time or level of e
 #### How to follow SteemMakers Trail
 To follow SteemMakers trail:
 Login to steemauto and authorize via SteemConnect with your steem username and posting key, as shown below
+
 Once logged in, you will be requested to give steemauto posting authorization. For steemauto to vote in your place it needs to be given the rights to do so. This does not require you to pass over any of your keys and is completely reversible. SteemConnect is a collaborative effort of Steemit Inc and Busy and is the best known service for this. You can find more info on their site and in this announcement.
+
 Always keep an eye on the address bar, be sure to be on a secure connection to the correct address.
+
 Once you’re logged in, you will be directed to steemauto’s dashboard. Look for ‘Curation Trail’ and click on it. 
+
 Look for ‘Search for a trail', type and search for steemmakers.
+
 A search result for steemmakers will display. Click on ‘Follow’ to follow our trail. 
+
 Once this process is completed, a green pop-up notification will display on the top right corner of your browser, indicating you have successfully followed the steemmakers trail. You can choose to adjust your ‘Voting weight’ and ‘Time to wait before voting’ from the settings. 
+
 Thank you for following our trail today. 
 
